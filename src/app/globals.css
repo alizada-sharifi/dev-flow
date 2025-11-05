@@ -112,11 +112,69 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+@theme {
+  --color-primary-100: #fff1e6;
+  --color-primary-500: #ff7000;
+
+  --color-dark-200: #0f1117;
+  --color-dark-300: #151821;
+  --color-dark-400: #212734;
+  --color-dark-500: #101012;
+
+  --color-light-400: #858ead;
+  --color-light-500: #7b8ec8;
+  --color-light-700: #dce3f1;
+  --color-light-800: #f4f6f8;
+  --color-light-850: #fdfdfd;
+  --color-light-900: #ffffff;
+
+  --color-link-100: #1da1f2;
+
+  /* font family ============== */
+  --font-inter: var(--font-inter);
+  --font-space-grotesk: var(--font-space-grotesk);
+}
+
+/*============= text decorations ==============  */
+
+@utility base-medium {
+  @apply text-[18px] font-medium leading-[25.2px];
+}
+
+@utility base-bold {
+  @apply text-[18px] font-bold leading-[140%];
+}
+
+@utility h2-bold {
+  @apply text-[24px] font-bold leading-[31.2px];
+}
+
+@utility primary-gradient {
+  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+}
+
+@utility primary-text-gradient {
+  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
