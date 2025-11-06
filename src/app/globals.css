@@ -133,9 +133,16 @@
   /* font family ============== */
   --font-inter: var(--font-inter);
   --font-space-grotesk: var(--font-space-grotesk);
+
+  --background-image-auth-dark: url("/images/auth-dark.png");
+  --background-image-auth-light: url("/images/auth-light.png");
 }
 
 /*============= text decorations ==============  */
+
+@utility body-medium {
+  @apply text-[14px] font-medium leading-[18.2px];
+}
 
 @utility base-medium {
   @apply text-[18px] font-medium leading-[25.2px];
@@ -143,6 +150,10 @@
 
 @utility base-bold {
   @apply text-[18px] font-bold leading-[140%];
+}
+
+@utility paragraph-regular {
+  @apply text-[16px] font-normal leading-[22.4px];
 }
 
 @utility h2-bold {
@@ -158,6 +169,10 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+@utility invert-colors {
+  @apply invert dark:invert-0;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

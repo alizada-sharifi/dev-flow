@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +28,7 @@ function CustomButton({
       type={type}
       variant={"ghost"}
       className={cn(
-        "font-medium leading-[18px] cursor-pointer",
+        "font-medium leading-[18px] cursor-pointer w-full",
         buttonVariant[variant],
         className
       )}

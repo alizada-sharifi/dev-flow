@@ -6,6 +6,8 @@ const ROUTES = {
   TAGS: "tags",
   PROPFILE: (id: string) => `/profile/${id}`,
   ASKQUESTION: "ask-question",
+  LOGIN: "/login",
+  SIGNUP: "/sign-up",
 };
 
 export default ROUTES;

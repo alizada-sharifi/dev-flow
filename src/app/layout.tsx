@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-// import "./globals.css";
 import "./globals.css";
 import { ThemeProvider } from "@/context/Theme";
 
@@ -34,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${spaceGrotesk.className} antialiased`}
+        className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"

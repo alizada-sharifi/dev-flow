@@ -1,12 +1,15 @@
 "use client";
 import { usePathname } from "next/navigation";
-import navbars from "@/constants/navbars";
 import Link from "next/link";
+import Image from "next/image";
+
+import { useState } from "react";
+
+import { CircleUserRound, UserRoundPlus, Menu, X } from "lucide-react";
+
+import navbars from "@/constants/navbars";
 import { cn } from "@/lib/utils";
 import CustomButton from "../common/CustomButton";
-import { CircleUserRound, UserRoundPlus, Menu, X } from "lucide-react";
-import { useState } from "react";
-import Image from "next/image";
 import ROUTES from "@/constants/route";
 import { Button } from "../ui/button";
 
@@ -97,15 +100,19 @@ function LeftSidebar() {
         </ul>
 
         <div className="flex flex-col gap-3 mt-10">
-          <CustomButton variant="secondary">
-            <CircleUserRound className="lg:hidden" />
-            <p className="primary-text-gradient">Log In</p>
-          </CustomButton>
+          <Link href={ROUTES.LOGIN} className="w-full block">
+            <CustomButton variant="secondary" className="w-full">
+              <CircleUserRound className="lg:hidden" />
+              <p className="primary-text-gradient">Log In</p>
+            </CustomButton>
+          </Link>
 
-          <CustomButton variant="tertiary">
-            <UserRoundPlus />
-            <p>Sign Up</p>
-          </CustomButton>
+          <Link href={ROUTES.SIGNUP} className="w-full block">
+            <CustomButton variant="tertiary" className="w-full">
+              <UserRoundPlus />
+              <p>Sign Up</p>
+            </CustomButton>
+          </Link>
         </div>
       </section>
     </>

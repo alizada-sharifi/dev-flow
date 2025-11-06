@@ -1,10 +1,14 @@
 "use client";
+
 import { usePathname } from "next/navigation";
-import navbars from "@/constants/navbars";
 import Link from "next/link";
+
+import { CircleUserRound, UserRoundPlus } from "lucide-react";
+
+import navbars from "@/constants/navbars";
 import { cn } from "@/lib/utils";
 import CustomButton from "../common/CustomButton";
-import { CircleUserRound, UserRoundPlus } from "lucide-react";
+import ROUTES from "@/constants/route";
 
 function LeftSidebar() {
   const pathname = usePathname();
@@ -55,15 +59,21 @@ function LeftSidebar() {
 
         <div className="flex flex-col gap-3 mt-10">
           <>
-            <CustomButton variant="secondary">
-              <CircleUserRound size={26} className="lg:hidden" />
-              <p className="primary-text-gradient md:hidden lg:block">Log In</p>
-            </CustomButton>
+            <Link href={ROUTES.LOGIN} className="block w-full">
+              <CustomButton variant="secondary" className="w-full">
+                <CircleUserRound size={26} className="lg:hidden" />
+                <p className="primary-text-gradient md:hidden lg:block">
+                  Log In
+                </p>
+              </CustomButton>
+            </Link>
 
-            <CustomButton variant="tertiary">
-              <UserRoundPlus size={40} className="lg:hidden" />
-              <p className="md:hidden lg:block">Sign Up</p>
-            </CustomButton>
+            <Link href={ROUTES.SIGNUP} className="block w-full">
+              <CustomButton variant="tertiary" className="w-full">
+                <UserRoundPlus size={40} className="lg:hidden" />
+                <p className="md:hidden lg:block">Sign Up</p>
+              </CustomButton>
+            </Link>
           </>
         </div>
       </section>
