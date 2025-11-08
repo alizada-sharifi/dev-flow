@@ -164,6 +164,10 @@
   @apply text-[16px] font-normal leading-[22.4px];
 }
 
+@utility h1-bold {
+  @apply text-[30px] font-bold leading-[42px] tracking-tighter;
+}
+
 @utility h2-bold {
   @apply text-[24px] font-bold leading-[31.2px];
 }
@@ -176,6 +180,19 @@
   background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
 }
 
+@utility dark-gradient {
+  background: linear-gradient(
+    232deg,
+    rgba(23, 28, 35, 0.41) 0%,
+    rgba(19, 22, 28, 0.7) 100%
+  );
+  background: linear-gradient(
+    232deg,
+    rgba(23, 28, 35, 0.41) 0%,
+    rgba(19, 22, 28, 0.7) 100%
+  );
+}
+
 @utility primary-text-gradient {
   background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
   background-clip: text;
@@ -185,6 +202,14 @@
 
 @utility invert-colors {
   @apply invert dark:invert-0;
+}
+
+@utility placeholder {
+  @apply placeholder:text-light-400 dark:placeholder:text-light-500;
+}
+
+@utility no-focus {
+  @apply focus-visible:ring-0! focus-visible:ring-transparent! focus-visible:ring-offset-0!;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
