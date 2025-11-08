@@ -1,4 +1,4 @@
-import { LeftSidebar, Navbar } from "@/components";
+import { LeftSidebar, Navbar, RightSidebar } from "@/components";
 
 export default function SiteLayout({
   children,
@@ -15,6 +15,7 @@ export default function SiteLayout({
         <section className="flex flex-1 flex-col overflow-y-auto px-6 pb-6 sm:px-14">
           <div className="mx-auto w-full max-w-5xl">{children}</div>
         </section>
+        <RightSidebar />
       </div>
     </main>
   );
