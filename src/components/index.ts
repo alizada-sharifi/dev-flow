@@ -7,3 +7,4 @@ export { default as SocialAuthForm } from "./common/SocialAuthForm";
 export { default as CustomInput } from "./common/hook-form/CustomInput";
 export { default as TagCard } from "./common/TagCard";
 export { default as LocalSearch } from "./common/LocalSearch";
+export { default as Metric } from "./common/Metric";

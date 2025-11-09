@@ -29,7 +29,7 @@ function RightSidebar() {
         <div className="flex flex-col gap-6 w-full mt-7">
           {hotQuestions.map(({ _id, title }) => (
             <Link
-              href={ROUTES.PROPFILE(_id)}
+              href={ROUTES.PROFILE(_id)}
               key={_id}
               className="flex items-center justify-between gap-7 cursor-pointer"
             >

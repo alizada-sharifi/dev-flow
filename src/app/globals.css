@@ -130,6 +130,11 @@
 
   --color-link-100: #1da1f2;
 
+  --shadow-light-100: 0px 12px 20px 0px rgba(184, 184, 184, 0.03),
+    0px 6px 12px 0px rgba(184, 184, 184, 0.02),
+    0px 2px 4px 0px rgba(184, 184, 184, 0.03);
+  --shadow-dark-100: 0px 2px 10px 0px rgba(46, 52, 56, 0.1);
+
   /* font family ============== */
   --font-inter: var(--font-inter);
   --font-space-grotesk: var(--font-space-grotesk);
@@ -137,11 +142,18 @@
   --background-image-auth-dark: url("/images/auth-dark.png");
   --background-image-auth-light: url("/images/auth-light.png");
 }
-
 /*============= text decorations ==============  */
+
+@utility subtle-regular {
+  @apply text-[10px] font-normal leading-[13px];
+}
 
 @utility subtle-medium {
   @apply text-[10px]! font-medium! leading-[13px]!;
+}
+
+@utility small-regular {
+  @apply text-[12px] font-normal leading-[15.6px];
 }
 
 @utility small-medium {
@@ -154,6 +166,10 @@
 
 @utility base-medium {
   @apply text-[18px] font-medium leading-[25.2px];
+}
+
+@utility base-semibold {
+  @apply text-[18px] font-semibold leading-[25.2px];
 }
 
 @utility base-bold {
@@ -170,6 +186,10 @@
 
 @utility h2-bold {
   @apply text-[24px] font-bold leading-[31.2px];
+}
+
+@utility h3-semibold {
+  @apply text-[20px] font-semibold leading-[24.8px];
 }
 
 @utility h3-bold {
