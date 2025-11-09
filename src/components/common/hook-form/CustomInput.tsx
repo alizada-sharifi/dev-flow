@@ -59,7 +59,11 @@ function CustomInput<
               {required && <span className="text-red-600">*</span>}
             </FormLabel>
           )}
-          {description && <FormDescription>{description}</FormDescription>}
+          {description && (
+            <FormDescription className="text-[10px]">
+              {description}
+            </FormDescription>
+          )}
 
           <FormControl>
             <Input
