@@ -1,17 +1,35 @@
 "use client";
 
+import dynamic from "next/dynamic";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { CustomButton, CustomInput } from "@/components";
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import {
   type AskQuestionData,
   AskQuestionSchema,
 } from "@/schemas/ask-question.schema";
 import TagInput from "./TagInput";
+import { useRef } from "react";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+
+const Editor = dynamic(() => import("@/components/common/Editor"), {
+  ssr: false,
+});
 
 function QuestionForm() {
+  const editorRef = useRef<MDXEditorMethods>(null);
+
   const form = useForm<AskQuestionData>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
@@ -40,13 +58,32 @@ function QuestionForm() {
           placeholder="Enter your title"
         />
 
-        <CustomInput
+        <FormField
           control={form.control}
           name="content"
-          label="Detailed explanation of your problem"
-          description="Introduce the problem and expand on what you've put in the title."
-          required
-          placeholder="Enter your description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="gap-0.5 text-sm font-medium text-neutral-800 dark:text-light-850 mb-0">
+                Detailed explanation of your problem
+                <span className="text-red-600">*</span>
+              </FormLabel>
+
+              <FormDescription className="text-[10px]">
+                Introduce the problem and expand on what you&apos;ve put in the
+                title.
+              </FormDescription>
+
+              <FormControl>
+                <Editor
+                  value={field.value}
+                  editorRef={editorRef}
+                  fieldChange={field.onChange}
+                />
+              </FormControl>
+
+              <FormMessage className="text-xs" />
+            </FormItem>
+          )}
         />
 
         <TagInput
