@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 export type TagType = {
   _id: string;
   name: string;
@@ -21,3 +23,18 @@ export type QuestionType = {
   answers: number;
   views: number;
 };
+
+export type ActionResponse<T = null> = {
+  success: boolean;
+  data?: T;
+  error?: { message: string; details?: Record<string, string[]> };
+  status?: number;
+};
+
+export type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
+export type ErrorResponse<T = null> = ActionResponse<T> & { success: false };
+
+export type APiErrorResponse = NextResponse<ErrorResponse>;
+export type ApiResponse<T = null> = NextResponse<
+  SuccessResponse<T> | ErrorResponse
+>;
