@@ -10,6 +10,7 @@ const ROUTES = {
   ASKQUESTION: "ask-question",
   LOGIN: "/login",
   SIGNUP: "/sign-up",
+  SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
 };
 
 export default ROUTES;
