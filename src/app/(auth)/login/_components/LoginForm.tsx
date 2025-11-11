@@ -9,8 +9,13 @@ import { LoginSchema, LoginFormData } from "@/schemas/login.schema";
 import { Form } from "@/components/ui/form";
 import { CustomButton, CustomInput } from "@/components";
 import ROUTES from "@/constants/route";
+import { signInWithCredentials } from "@/lib/actions/auth.action";
+import { ActionResponse } from "@/types";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -20,7 +25,17 @@ export default function LoginForm() {
   });
   const { handleSubmit } = form;
 
-  const onSubmit = (data: LoginFormData) => console.log(data);
+  const onSubmit = async (data: LoginFormData) => {
+    const result = (await signInWithCredentials(data)) as ActionResponse;
+
+    if (result?.success) {
+      toast.success("Logged In successfully");
+
+      router.push(ROUTES.HOME);
+    } else {
+      toast.error(result?.error?.message);
+    }
+  };
 
   return (
     <>
@@ -44,7 +59,7 @@ export default function LoginForm() {
           />
 
           <CustomButton className="py-5" type="submit">
-            Sign in
+            {form.formState.isSubmitting ? "Logging In" : "Login"}
           </CustomButton>
         </form>
       </Form>
