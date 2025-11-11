@@ -8,3 +8,10 @@ export type SignInWithOAuthParams = {
     image: string;
   };
 };
+
+export type AuthCredentials = {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+};

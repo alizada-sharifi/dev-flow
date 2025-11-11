@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,10 +12,14 @@ import { CustomButton, CustomInput } from "@/components";
 import ROUTES from "@/constants/route";
 import { SignUpSchema } from "@/schemas/sign-up.schema";
 import type { SignUpFormData } from "@/schemas/sign-up.schema";
+import { signUpWithCredentials } from "@/lib/actions/auth.action";
+import { ActionResponse } from "@/types";
 
 export default function SignUpForm() {
+  const router = useRouter();
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(SignUpSchema),
+
     defaultValues: {
       email: "",
       password: "",
@@ -23,7 +29,17 @@ export default function SignUpForm() {
   });
   const { handleSubmit } = form;
 
-  const onSubmit = (data: SignUpFormData) => console.log(data);
+  const onSubmit = async (data: SignUpFormData) => {
+    const result = (await signUpWithCredentials(data)) as ActionResponse;
+
+    if (result?.success) {
+      toast.success("Signed up successfully");
+
+      router.push(ROUTES.HOME);
+    } else {
+      toast.error(result?.error?.message);
+    }
+  };
 
   return (
     <>
@@ -63,7 +79,7 @@ export default function SignUpForm() {
           />
 
           <CustomButton className="py-5" type="submit">
-            Sign Up
+            {form.formState.isSubmitting ? "Signing Up..." : "Sign Up"}
           </CustomButton>
         </form>
       </Form>
