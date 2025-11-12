@@ -1,21 +1,19 @@
 "use client";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
 import { useState } from "react";
 
-import { CircleUserRound, UserRoundPlus, Menu, X } from "lucide-react";
+import { CircleUserRound, UserRoundPlus, Menu, X, LogOut } from "lucide-react";
 
-import navbars from "@/constants/navbars";
 import { cn } from "@/lib/utils";
 import CustomButton from "../common/CustomButton";
 import ROUTES from "@/constants/route";
 import { Button } from "../ui/button";
+import NavLinks from "./NavLinks";
+import { signOutAction } from "@/lib/actions/auth.action";
 
-function LeftSidebar() {
-  const pathname = usePathname();
-  const userId = 1;
+function MobileNav({ userId }: { userId?: string }) {
   const [open, setOpen] = useState(false);
 
   const handleLinkClick = () => setOpen(false);
@@ -53,7 +51,7 @@ function LeftSidebar() {
               height={23}
               alt="Logo"
             />
-            <p className="font-space-grotesk text-black dark:text-white">
+            <p className="font-space-grotesk text-black font-semibold dark:text-white">
               Dev
               <b className="text-primary-500">OverFlow</b>
             </p>
@@ -64,59 +62,40 @@ function LeftSidebar() {
           </button>
         </div>
 
-        <ul className="flex flex-col gap-y-4 mt-10 lg:mt-0">
-          {navbars.map((item) => {
-            const path =
-              item.route === "/profile" && userId
-                ? `${item.route}/${userId}`
-                : item.route;
-
-            const isActive =
-              pathname === path || pathname.startsWith(`${path}/`);
-
-            return (
-              <li
-                key={item.label}
-                className={cn(
-                  "p-2 rounded-md",
-                  isActive
-                    ? "primary-gradient text-white"
-                    : "text-dark-300 dark:text-white"
-                )}
-              >
-                <Link
-                  href={path}
-                  onClick={handleLinkClick}
-                  className="flex gap-2 items-center"
-                >
-                  <item.icon size={22} />
-                  <p className={cn(isActive ? "base-bold" : "base-medium")}>
-                    {item.label}
-                  </p>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <NavLinks handleClick={handleLinkClick} />
 
         <div className="flex flex-col gap-3 mt-10">
-          <Link href={ROUTES.LOGIN} className="w-full block">
-            <CustomButton variant="secondary" className="w-full">
-              <CircleUserRound className="lg:hidden" />
-              <p className="primary-text-gradient">Log In</p>
-            </CustomButton>
-          </Link>
+          {userId ? (
+            <form action={signOutAction}>
+              <Button
+                type="submit"
+                className="base-medium w-fit bg-transparent px-4 py-3"
+              >
+                <LogOut className="size-5 text-black dark:text-white" />
+                <span className="text-dark-300 dark:text-white">Logout</span>
+              </Button>
+            </form>
+          ) : (
+            <>
+              <Link href={ROUTES.LOGIN} className="w-full block">
+                <CustomButton variant="secondary" className="w-full">
+                  <CircleUserRound className="lg:hidden" />
+                  <p className="primary-text-gradient">Log In</p>
+                </CustomButton>
+              </Link>
 
-          <Link href={ROUTES.SIGNUP} className="w-full block">
-            <CustomButton variant="tertiary" className="w-full">
-              <UserRoundPlus />
-              <p>Sign Up</p>
-            </CustomButton>
-          </Link>
+              <Link href={ROUTES.SIGNUP} className="w-full block">
+                <CustomButton variant="tertiary" className="w-full">
+                  <UserRoundPlus />
+                  <p>Sign Up</p>
+                </CustomButton>
+              </Link>
+            </>
+          )}
         </div>
       </section>
     </>
   );
 }
 
-export default LeftSidebar;
+export default MobileNav;
