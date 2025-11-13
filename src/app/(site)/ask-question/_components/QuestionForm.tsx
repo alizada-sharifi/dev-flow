@@ -27,14 +27,20 @@ import {
 } from "@/schemas/ask-question.schema";
 import TagInput from "./TagInput";
 import { MDXEditorMethods } from "@mdxeditor/editor";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import ROUTES from "@/constants/route";
+import { QuestionType } from "@/types";
 
 const Editor = dynamic(() => import("@/components/common/Editor"), {
   ssr: false,
 });
 
-function QuestionForm() {
+type Params = {
+  question?: QuestionType | null;
+  isEdit?: boolean;
+};
+
+function QuestionForm({ question, isEdit = false }: Params) {
   const router = useRouter();
   const editorRef = useRef<MDXEditorMethods>(null);
   const [isPending, startTransition] = useTransition();
@@ -42,14 +48,28 @@ function QuestionForm() {
   const form = useForm<AskQuestionData>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
-      title: "",
-      content: "",
-      tags: [],
+      title: question?.title || "",
+      content: question?.content || "",
+      tags: question?.tags.map((tag) => tag.name) || [],
     },
   });
 
   const onSubmit = async (data: AskQuestionData) => {
     startTransition(async () => {
+      if (isEdit && question) {
+        const result = await editQuestion({
+          questionId: question?._id,
+          ...data,
+        });
+
+        if (result.success) {
+          toast.success("Question updated successfully");
+          if (result.data) router.push(ROUTES.QUESTIONS(result.data._id));
+        } else {
+          toast.error(result.error?.message || "Oops, Something went wrong");
+        }
+        return;
+      }
       const result = await createQuestion(data);
 
       if (result.success) {
@@ -119,6 +139,8 @@ function QuestionForm() {
                 <Loader className="mr-2 size-4 animate-spin" />
                 <span>Submitting</span>
               </>
+            ) : isEdit ? (
+              "Edit"
             ) : (
               "Ask a Question"
             )}

@@ -21,3 +21,11 @@ export type CreateQuestionParams = {
   content: string;
   tags: string[];
 };
+
+export interface EditQuestionParams extends CreateQuestionParams {
+  questionId: string;
+}
+
+export type GetQuestionParams = {
+  questionId: string;
+};
