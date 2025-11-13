@@ -43,3 +43,11 @@ export type APiErrorResponse = NextResponse<ErrorResponse>;
 export type ApiResponse<T = null> = NextResponse<
   SuccessResponse<T> | ErrorResponse
 >;
+
+export type paginatedSearchParams = {
+  page?: number;
+  pageSize?: number;
+  query?: string;
+  filter?: string;
+  sort?: string;
+};

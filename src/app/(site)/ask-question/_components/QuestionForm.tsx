@@ -133,7 +133,11 @@ function QuestionForm({ question, isEdit = false }: Params) {
         />
 
         <div className="mt-16 flex justify-end">
-          <CustomButton type="submit" className="w-fit px-10">
+          <CustomButton
+            disabled={isPending}
+            type="submit"
+            className="w-fit px-10"
+          >
             {isPending ? (
               <>
                 <Loader className="mr-2 size-4 animate-spin" />
