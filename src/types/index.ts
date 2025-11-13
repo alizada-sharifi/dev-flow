@@ -24,9 +24,14 @@ export type QuestionType = {
   views: number;
 };
 
+export type RouteParams = {
+  params: Promise<Record<string, string>>;
+  searchParams: Promise<Record<string, string>>;
+};
+
 export type ActionResponse<T = null> = {
   success: boolean;
-  data?: T;
+  data?: T | null;
   error?: { message: string; details?: Record<string, string[]> };
   status?: number;
 };

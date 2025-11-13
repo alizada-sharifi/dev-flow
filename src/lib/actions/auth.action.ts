@@ -13,6 +13,7 @@ import { ActionResponse, ErrorResponse } from "@/types";
 import { AuthCredentials } from "@/types/action";
 import handleError from "../handlers/error";
 import { NotFoundError } from "../http-errors";
+import { SignUpSchema } from "@/schemas/sign-up.schema";
 
 export async function signUpWithCredentials(
   params: AuthCredentials

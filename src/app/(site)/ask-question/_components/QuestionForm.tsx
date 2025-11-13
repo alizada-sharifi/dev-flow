@@ -1,11 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+
+import { useRef, useTransition } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { toast } from "sonner";
 
 import { CustomButton, CustomInput } from "@/components";
+
 import {
   Form,
   FormControl,
@@ -20,15 +26,18 @@ import {
   AskQuestionSchema,
 } from "@/schemas/ask-question.schema";
 import TagInput from "./TagInput";
-import { useRef } from "react";
 import { MDXEditorMethods } from "@mdxeditor/editor";
+import { createQuestion } from "@/lib/actions/question.action";
+import ROUTES from "@/constants/route";
 
 const Editor = dynamic(() => import("@/components/common/Editor"), {
   ssr: false,
 });
 
 function QuestionForm() {
+  const router = useRouter();
   const editorRef = useRef<MDXEditorMethods>(null);
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<AskQuestionData>({
     resolver: zodResolver(AskQuestionSchema),
@@ -39,10 +48,18 @@ function QuestionForm() {
     },
   });
 
-  const onSubmit = (data: AskQuestionData) => {
-    console.log("✅ Submitted:", data);
-  };
+  const onSubmit = async (data: AskQuestionData) => {
+    startTransition(async () => {
+      const result = await createQuestion(data);
 
+      if (result.success) {
+        toast.success("Question created successfully");
+        if (result.data) router.push(ROUTES.QUESTIONS(result.data._id));
+      } else {
+        toast.error(result.error?.message || "Oops, Something went wrong");
+      }
+    });
+  };
   return (
     <Form {...form}>
       <form
@@ -97,7 +114,14 @@ function QuestionForm() {
 
         <div className="mt-16 flex justify-end">
           <CustomButton type="submit" className="w-fit px-10">
-            Submit
+            {isPending ? (
+              <>
+                <Loader className="mr-2 size-4 animate-spin" />
+                <span>Submitting</span>
+              </>
+            ) : (
+              "Ask a Question"
+            )}
           </CustomButton>
         </div>
       </form>

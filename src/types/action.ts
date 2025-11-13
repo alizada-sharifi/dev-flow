@@ -15,3 +15,9 @@ export type AuthCredentials = {
   email: string;
   password: string;
 };
+
+export type CreateQuestionParams = {
+  title: string;
+  content: string;
+  tags: string[];
+};
