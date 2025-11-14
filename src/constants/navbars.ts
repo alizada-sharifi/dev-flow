@@ -32,7 +32,7 @@ const navbars = [
   },
   {
     icon: Tag,
-    route: "/tag",
+    route: ROUTES.TAGS,
     label: "Tags",
   },
 
