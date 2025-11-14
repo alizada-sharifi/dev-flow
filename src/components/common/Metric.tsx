@@ -13,6 +13,7 @@ interface Props {
   imgStyles?: string;
   isAuthor?: boolean;
   titleStyles?: string;
+  imgContainerStyle?: string;
 }
 
 const Metric = ({
@@ -25,16 +26,19 @@ const Metric = ({
   imgStyles,
   isAuthor,
   titleStyles,
+  imgContainerStyle,
 }: Props) => {
   const metricContent = (
     <>
-      <Image
-        src={imgUrl}
-        width={16}
-        height={16}
-        alt={alt}
-        className={`rounded-full object-contain ${imgStyles}`}
-      />
+      <div className={cn(imgContainerStyle)}>
+        <Image
+          src={imgUrl}
+          width={16}
+          height={16}
+          alt={alt}
+          className={`rounded-full object-contain ${imgStyles}`}
+        />
+      </div>
 
       <p className={`${textStyles} flex items-center gap-1`}>
         {value}

@@ -1,11 +1,12 @@
 import Link from "next/link";
 
-import { CustomButton, LocalSearch } from "@/components";
+import { CustomButton, DataRender, LocalSearch } from "@/components";
 import ROUTES from "@/constants/route";
 import HomeFilter from "./_components/HomeFilter";
 import QuestionCard from "./_components/QuestionCard";
 import { getQuestions } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types";
+import { EMPTY_QUESTION } from "@/constants/states";
 
 export default async function Home({ searchParams }: RouteParams) {
   const { page, pageSize, query, filter } = await searchParams;
@@ -40,10 +41,25 @@ export default async function Home({ searchParams }: RouteParams) {
 
       <section className="mt-11">
         <LocalSearch placeholder="search questions..." route="/" />
+      </section>
 
-        <HomeFilter />
+      <HomeFilter />
 
-        {success ? (
+      <DataRender
+        success={success}
+        error={error}
+        empty={EMPTY_QUESTION}
+        data={questions}
+        render={(questions) => (
+          <div className="mt-10 flex w-full flex-col gap-6">
+            {questions.map((question) => (
+              <QuestionCard key={question._id} question={question} />
+            ))}
+          </div>
+        )}
+      />
+
+      {/* {success ? (
           <div className="flex flex-col w-full mt-10 gap-6">
             {questions && questions.length > 0 ? (
               questions.map((question) => (
@@ -63,8 +79,7 @@ export default async function Home({ searchParams }: RouteParams) {
               {error?.message || "Failed to fetch questions"}
             </p>
           </div>
-        )}
-      </section>
+        )} */}
     </>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTimeStamp } from "@/lib/utils";
 import ROUTES from "@/constants/route";
 import { Metric, TagCard } from "@/components";
+import placeholderImage from "@/../public/images/placeholder.svg";
 
 import { QuestionType, TagType } from "@/types";
 
@@ -37,13 +38,14 @@ export default function QuestionCard({
 
       <div className="flex items-center justify-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl={author.image}
+          imgUrl={author.image || placeholderImage}
           alt={author.name}
           title={`. asked ${getTimeStamp(createdAt)}`}
           href={ROUTES.PROFILE(author._id)}
           value={author.name}
           textStyles="body-meduim text-dark-400 dark:text-light-700"
           isAuthor
+          imgContainerStyle={author.image ? "" : "bg-gray-200 p-1 rounded-full"}
         />
 
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">

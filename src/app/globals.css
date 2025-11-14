@@ -176,12 +176,20 @@
   @apply text-[18px] font-semibold leading-[25.2px];
 }
 
+@utility body-regular {
+  @apply text-[14px] font-normal leading-[19.6px];
+}
+
 @utility base-bold {
   @apply text-[18px] font-bold leading-[140%];
 }
 
 @utility paragraph-regular {
   @apply text-[16px] font-normal leading-[22.4px];
+}
+
+@utility paragraph-medium {
+  @apply text-[16px] font-medium leading-[22.4px];
 }
 
 @utility paragraph-semibold {
