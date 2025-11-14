@@ -77,7 +77,7 @@ function TagCard({
 
   return (
     <Link href={ROUTES.TAG(_id)} className="shadow-light-100 dark:shadow-none">
-      <article className=" bg-white dark:bg-dark-200  flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px]">
+      <article className=" bg-light-800/50 dark:bg-dark-300  flex w-full flex-col rounded-2xl  px-8 py-10 sm:w-[260px]">
         <div className="flex items-center justify-between gap-3">
           <div className="bg-light-800 dark:bg-dark-400 w-fit rounded-sm px-5 py-1.5">
             <p className="paragraph-semibold text-dark-300 dark:text-white">
