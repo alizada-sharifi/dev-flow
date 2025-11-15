@@ -20,11 +20,14 @@ import {
   CreateQuestionParams,
   EditQuestionParams,
   GetQuestionParams,
+  IncrementViewsParams,
 } from "@/types/action";
 import { EditQuestionSchema } from "@/schemas/edit-question.schema";
 import { NotFoundError, UnauthorizedError } from "../http-errors";
 import { GetQuestionSchema } from "@/schemas/get-question.schema";
 import { PaginatedSearchParamsSchema } from "@/schemas/paginated-search-params.schema";
+import { IncrementViewsSchema } from "@/schemas/increment-views.schema";
+import queryString from "query-string";
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -284,6 +287,35 @@ export async function getQuestions(
       success: true,
       data: { questions: JSON.parse(JSON.stringify(questions)), isNext },
     };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function incrementViews(
+  params: IncrementViewsParams
+): Promise<ActionResponse<{ views: number }>> {
+  const validationResult = await action({
+    params,
+    schema: IncrementViewsSchema,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { questionId } = validationResult.params!;
+
+  try {
+    const question = await Question.findById(questionId);
+
+    if (!question) throw new NotFoundError("Question");
+
+    question.views += 1;
+
+    await question.save();
+
+    return { success: true, data: { views: question.views } };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 
 import { Metric, TagCard } from "@/components";
 import { Preview } from "@/components/common/Preview";
 import UserAvatar from "@/components/layout/UserAvatar";
 
-import { getQuestion } from "@/lib/actions/question.action";
+import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 
 import ROUTES from "@/constants/route";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
@@ -14,6 +15,10 @@ import { RouteParams, TagType } from "@/types";
 async function QuestionsDetail({ params }: RouteParams) {
   const { id } = await params;
   const { success, data: question } = await getQuestion({ questionId: id });
+
+  after(async () => {
+    await incrementViews({ questionId: id });
+  });
 
   if (!question || !success) return redirect("/404");
 
