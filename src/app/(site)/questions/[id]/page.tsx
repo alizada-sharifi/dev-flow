@@ -11,6 +11,7 @@ import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import ROUTES from "@/constants/route";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, TagType } from "@/types";
+import AnswerForm from "./_components/AnswerForm";
 
 async function QuestionsDetail({ params }: RouteParams) {
   const { id } = await params;
@@ -82,6 +83,10 @@ async function QuestionsDetail({ params }: RouteParams) {
           <TagCard key={tag._id} _id={tag._id} name={tag.name} compact />
         ))}
       </div>
+
+      <section className="mb-5">
+        <AnswerForm />
+      </section>
     </>
   );
 }
