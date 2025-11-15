@@ -1,3 +1,5 @@
+import { paginatedSearchParams } from ".";
+
 export type SignInWithOAuthParams = {
   provider: "github" | "google";
   providerAccountId: string;
@@ -29,3 +31,8 @@ export interface EditQuestionParams extends CreateQuestionParams {
 export type GetQuestionParams = {
   questionId: string;
 };
+
+export interface GetTagQuestionsParams
+  extends Omit<paginatedSearchParams, "filter"> {
+  tagId: string;
+}
