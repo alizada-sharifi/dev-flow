@@ -133,7 +133,9 @@
   --shadow-light-100: 0px 12px 20px 0px rgba(184, 184, 184, 0.03),
     0px 6px 12px 0px rgba(184, 184, 184, 0.02),
     0px 2px 4px 0px rgba(184, 184, 184, 0.03);
+  --shadow-light-200: 10px 10px 20px 0px rgba(218, 213, 213, 0.1);
   --shadow-dark-100: 0px 2px 10px 0px rgba(46, 52, 56, 0.1);
+  --shadow-dark-200: 2px 0px 20px 0px rgba(39, 36, 36, 0.04);
 
   /* font family ============== */
   --font-inter: var(--font-inter);
@@ -198,6 +200,10 @@
 
 @utility h1-bold {
   @apply text-[30px] font-bold leading-[42px] tracking-tighter;
+}
+
+@utility h2-semibold {
+  @apply text-[24px] font-semibold leading-[31.2px];
 }
 
 @utility h2-bold {
