@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useTransition } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,13 +19,19 @@ import {
 } from "@/components/ui/form";
 import { MDXEditorMethods } from "@mdxeditor/editor";
 import { AnswerData, AnswerSchema } from "@/schemas/answer.schema";
+import { CreateAnswer } from "@/lib/actions/answer.action";
+import { toast } from "sonner";
 
 const Editor = dynamic(() => import("@/components/common/Editor"), {
   ssr: false,
 });
 
-function AnswerForm() {
-  const [isAnswering, setIsAnswering] = useState(false);
+type props = {
+  questionId: string;
+};
+
+function AnswerForm({ questionId }: props) {
+  const [isPending, startTransition] = useTransition();
   const [isAIAnswering, setIsAIAnswering] = useState(false);
   const editorRef = useRef<MDXEditorMethods>(null);
 
@@ -37,7 +43,20 @@ function AnswerForm() {
   });
 
   const onSubmit = async (data: AnswerData) => {
-    console.log(data);
+    startTransition(async () => {
+      const result = await CreateAnswer({ questionId, content: data.content });
+
+      if (result.success) {
+        form.reset();
+
+        toast.success("Your answer submitted successfully");
+      } else {
+        toast.error(
+          result.error?.message ||
+            "Oops, Something went wrong could you try again later"
+        );
+      }
+    });
   };
   return (
     <>
@@ -86,11 +105,11 @@ function AnswerForm() {
 
           <div className="flex justify-end">
             <CustomButton
-              disabled={isAnswering}
+              disabled={isPending}
               type="submit"
               className="w-fit px-10"
             >
-              {isAnswering ? (
+              {isPending ? (
                 <>
                   <Loader className="mr-2 size-4 animate-spin" />
                   Posting...

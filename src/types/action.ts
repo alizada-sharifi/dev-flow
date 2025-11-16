@@ -40,3 +40,8 @@ export interface GetTagQuestionsParams
 export type IncrementViewsParams = {
   questionId: string;
 };
+
+export type answerParams = {
+  questionId: string;
+  content: string;
+};
