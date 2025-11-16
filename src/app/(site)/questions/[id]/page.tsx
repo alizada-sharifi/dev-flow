@@ -13,6 +13,7 @@ import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, TagType } from "@/types";
 import AnswerForm from "./_components/AnswerForm";
 import { getAnswers } from "@/lib/actions/answer.action";
+import Answers from "./_components/Answers";
 
 async function QuestionsDetail({ params }: RouteParams) {
   const { id } = await params;
@@ -34,8 +35,6 @@ async function QuestionsDetail({ params }: RouteParams) {
     page: 1,
     pageSize: 10,
   });
-
-  console.log("Answers", answerResult);
 
   const { answers, author, createdAt, views, tags, content, title } = question;
   return (
@@ -97,6 +96,15 @@ async function QuestionsDetail({ params }: RouteParams) {
           <TagCard key={tag._id} _id={tag._id} name={tag.name} compact />
         ))}
       </div>
+
+      <section className="my-5">
+        <Answers
+          totalAnswers={answerResult?.totalAnswers || 0}
+          success={isAnswerSuccess}
+          data={answerResult?.answers}
+          error={answerError}
+        />
+      </section>
 
       <section className="mb-5">
         <AnswerForm questionId={question._id} />
