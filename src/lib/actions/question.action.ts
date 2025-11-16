@@ -27,7 +27,6 @@ import { NotFoundError, UnauthorizedError } from "../http-errors";
 import { GetQuestionSchema } from "@/schemas/get-question.schema";
 import { PaginatedSearchParamsSchema } from "@/schemas/paginated-search-params.schema";
 import { IncrementViewsSchema } from "@/schemas/increment-views.schema";
-import queryString from "query-string";
 
 export async function createQuestion(
   params: CreateQuestionParams

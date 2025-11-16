@@ -12,6 +12,7 @@ import ROUTES from "@/constants/route";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
 import { RouteParams, TagType } from "@/types";
 import AnswerForm from "./_components/AnswerForm";
+import { getAnswers } from "@/lib/actions/answer.action";
 
 async function QuestionsDetail({ params }: RouteParams) {
   const { id } = await params;
@@ -22,6 +23,19 @@ async function QuestionsDetail({ params }: RouteParams) {
   });
 
   if (!question || !success) return redirect("/404");
+
+  const {
+    success: isAnswerSuccess,
+    data: answerResult,
+    error: answerError,
+  } = await getAnswers({
+    questionId: id,
+    filter: "latest",
+    page: 1,
+    pageSize: 10,
+  });
+
+  console.log("Answers", answerResult);
 
   const { answers, author, createdAt, views, tags, content, title } = question;
   return (

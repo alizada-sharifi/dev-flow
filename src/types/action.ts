@@ -45,3 +45,7 @@ export type answerParams = {
   questionId: string;
   content: string;
 };
+
+export interface getAnswerParams extends paginatedSearchParams {
+  questionId: string;
+}

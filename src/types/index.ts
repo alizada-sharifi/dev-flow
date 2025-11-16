@@ -24,6 +24,13 @@ export type QuestionType = {
   views: number;
 };
 
+export type AnswerType = {
+  _id: string;
+  author: AuthorType;
+  content: string;
+  createdAt: Date;
+};
+
 export type RouteParams = {
   params: Promise<Record<string, string>>;
   searchParams: Promise<Record<string, string>>;
