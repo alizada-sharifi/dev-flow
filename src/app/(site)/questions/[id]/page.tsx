@@ -107,7 +107,11 @@ async function QuestionsDetail({ params }: RouteParams) {
       </section>
 
       <section className="mb-5">
-        <AnswerForm questionId={question._id} />
+        <AnswerForm
+          questionId={question._id}
+          questionContent={question.content}
+          questionTitle={question.title}
+        />
       </section>
     </>
   );

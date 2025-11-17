@@ -21,6 +21,8 @@ import { MDXEditorMethods } from "@mdxeditor/editor";
 import { AnswerData, AnswerSchema } from "@/schemas/answer.schema";
 import { CreateAnswer } from "@/lib/actions/answer.action";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import { api } from "@/lib/api";
 
 const Editor = dynamic(() => import("@/components/common/Editor"), {
   ssr: false,
@@ -28,12 +30,16 @@ const Editor = dynamic(() => import("@/components/common/Editor"), {
 
 type props = {
   questionId: string;
+  questionTitle: string;
+  questionContent: string;
 };
 
-function AnswerForm({ questionId }: props) {
+function AnswerForm({ questionId, questionTitle, questionContent }: props) {
   const [isPending, startTransition] = useTransition();
   const [isAIAnswering, setIsAIAnswering] = useState(false);
   const editorRef = useRef<MDXEditorMethods>(null);
+
+  const session = useSession();
 
   const form = useForm<AnswerData>({
     resolver: zodResolver(AnswerSchema),
@@ -50,6 +56,10 @@ function AnswerForm({ questionId }: props) {
         form.reset();
 
         toast.success("Your answer submitted successfully");
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown("");
+        }
       } else {
         toast.error(
           result.error?.message ||
@@ -58,6 +68,47 @@ function AnswerForm({ questionId }: props) {
       }
     });
   };
+
+  const generateAIAnswer = async () => {
+    if (session.status !== "authenticated") {
+      return toast.error("You need to be logged in to use this feature");
+    }
+
+    setIsAIAnswering(true);
+
+    try {
+      const { data, success, error } = await api.ai.getAnswer(
+        questionTitle,
+        questionContent
+      );
+
+      if (!success || !data) {
+        toast.error(error?.message);
+      }
+
+      const formatedAnswer = String(data)
+        .replace(/<br>/g, " ")
+        .toString()
+        .trim();
+
+      if (editorRef.current) {
+        editorRef.current.setMarkdown(formatedAnswer);
+
+        form.setValue("content", formatedAnswer);
+        form.trigger("content");
+      }
+
+      toast.success("AI answer has been genrated");
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Oops, There was a problem with your request"
+      );
+    } finally {
+      setIsAIAnswering(false);
+    }
+  };
   return (
     <>
       <div className="flex max-sm:flex-col justify-between sm:items-center gap-5 sm:gap-2 mt-10">
@@ -65,7 +116,11 @@ function AnswerForm({ questionId }: props) {
           Write your answer here
         </h5>
 
-        <CustomButton variant="ai">
+        <CustomButton
+          variant="ai"
+          onClick={generateAIAnswer}
+          disabled={isAIAnswering}
+        >
           {isAIAnswering ? (
             <>
               <Loader className="mr-2 size-4 animate-spin" />
