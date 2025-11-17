@@ -76,10 +76,13 @@ function AnswerForm({ questionId, questionTitle, questionContent }: props) {
 
     setIsAIAnswering(true);
 
+    const userAnswer = editorRef.current?.getMarkdown();
+
     try {
       const { data, success, error } = await api.ai.getAnswer(
         questionTitle,
-        questionContent
+        questionContent,
+        userAnswer
       );
 
       if (!success || !data) {
