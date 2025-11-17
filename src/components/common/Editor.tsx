@@ -26,6 +26,7 @@ import {
   Separator,
   diffSourcePlugin,
   MDXEditorMethods,
+  DiffSourceToggleWrapper,
 } from "@mdxeditor/editor";
 import { basicDark } from "cm6-theme-basic-dark";
 import { useTheme } from "next-themes";
@@ -81,7 +82,7 @@ const Editor = ({ value, editorRef, fieldChange }: Props) => {
           autoLoadLanguageSupport: true,
           codeMirrorExtensions: themeExtension,
         }),
-        diffSourcePlugin({ viewMode: "rich-text", diffMarkdown: "" }),
+        diffSourcePlugin({ viewMode: "source", diffMarkdown: "" }),
         toolbarPlugin({
           toolbarContents: () => (
             <ConditionalContents
@@ -93,22 +94,24 @@ const Editor = ({ value, editorRef, fieldChange }: Props) => {
                 {
                   fallback: () => (
                     <>
-                      <UndoRedo />
-                      <Separator />
+                      <DiffSourceToggleWrapper>
+                        <UndoRedo />
+                        <BoldItalicUnderlineToggles />
 
-                      <BoldItalicUnderlineToggles />
-                      <CodeToggle />
-                      <Separator />
+                        <CodeToggle />
+                        <Separator />
 
-                      <CreateLink />
-                      <InsertImage />
-                      <Separator />
+                        <CreateLink />
+                        <InsertImage />
+                        <Separator />
 
-                      <InsertTable />
+                        <InsertTable />
 
-                      <Separator />
+                        <Separator />
 
-                      <InsertCodeBlock />
+                        <InsertCodeBlock />
+                        <Separator />
+                      </DiffSourceToggleWrapper>
                     </>
                   ),
                 },

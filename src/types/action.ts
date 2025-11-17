@@ -49,3 +49,19 @@ export type answerParams = {
 export interface getAnswerParams extends paginatedSearchParams {
   questionId: string;
 }
+
+export type VoteProp = {
+  targetId: string;
+  targetType: "question" | "answer";
+  voteType: "upvote" | "downvote";
+};
+
+export interface UpdateVoteCountProps extends VoteProp {
+  change: 1 | -1;
+}
+
+export type HasVoteProp = Pick<VoteProp, "targetId" | "targetType">;
+export type HasVoteResponse = {
+  isUpvoted: boolean;
+  isdownvoted: boolean;
+};
