@@ -24,7 +24,6 @@ import {
   ConditionalContents,
   ChangeCodeMirrorLanguage,
   Separator,
-  InsertThematicBreak,
   diffSourcePlugin,
   MDXEditorMethods,
 } from "@mdxeditor/editor";
@@ -105,7 +104,7 @@ const Editor = ({ value, editorRef, fieldChange }: Props) => {
                       <Separator />
 
                       <InsertTable />
-                      <InsertThematicBreak />
+
                       <Separator />
 
                       <InsertCodeBlock />
