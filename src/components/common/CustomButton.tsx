@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 export type CustomButtonProps = {
-  variant?: "primary" | "secondary" | "tertiary" | "ai";
+  variant?: "primary" | "secondary" | "tertiary" | "ai" | "pagination";
   type?: "button" | "submit" | "reset";
   children: React.ReactNode;
   disabled?: boolean;
@@ -23,6 +23,8 @@ function CustomButton({
     tertiary:
       "bg-light-700 dark:bg-dark-400 border-light-700 dark:border-dark-400 border px-4 py-3 rounded-lg",
     ai: "gap-1.5 rounded-md px-6 py-3 text-primary-500 shadow-md bg-light-400/50 dark:bg-dark-300 hover:bg-transparent sm:w-fit",
+    pagination:
+      "btn flex min-h-[36px] items-center justify-center gap-2 border border-light-700 dark:border-dark-400 w-fit",
   };
   return (
     <Button

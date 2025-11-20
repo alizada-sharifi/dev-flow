@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-import { CustomButton, DataRender, Filter, LocalSearch } from "@/components";
+import {
+  CustomButton,
+  DataRender,
+  Filter,
+  LocalSearch,
+  Pagination,
+} from "@/components";
 import ROUTES from "@/constants/route";
 import HomeFilter from "./_components/HomeFilter";
 import { QuestionCard } from "@/components";
@@ -19,7 +25,7 @@ export default async function Home({ searchParams }: RouteParams) {
     filter: filter || "",
   });
 
-  const { questions } = data || {};
+  const { questions, isNext } = data || {};
 
   return (
     <>
@@ -56,6 +62,8 @@ export default async function Home({ searchParams }: RouteParams) {
           </div>
         )}
       />
+
+      <Pagination isNext={isNext || false} page={page} />
     </>
   );
 }
