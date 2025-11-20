@@ -129,10 +129,12 @@ async function QuestionsDetail({ params, searchParams }: RouteParams) {
 
       <section className="my-5">
         <Answers
+          page={Number(page) || 1}
           totalAnswers={answerResult?.totalAnswers || 0}
           success={isAnswerSuccess}
           data={answerResult?.answers}
           error={answerError}
+          isNext={answerResult?.isNext || false}
         />
       </section>
 

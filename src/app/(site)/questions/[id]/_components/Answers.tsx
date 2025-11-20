@@ -1,4 +1,4 @@
-import { DataRender, Filter } from "@/components";
+import { DataRender, Filter, Pagination } from "@/components";
 import { EMPTY_ANSWERS } from "@/constants/states";
 import { ActionResponse, AnswerType } from "@/types";
 import AnswerCard from "./AnswerCard";
@@ -6,9 +6,11 @@ import { answerFilters } from "@/constants/filters";
 
 interface props extends ActionResponse<AnswerType[]> {
   totalAnswers: number;
+  page: number;
+  isNext: boolean;
 }
 
-function Answers({ totalAnswers, data, success, error }: props) {
+function Answers({ totalAnswers, data, success, error, page, isNext }: props) {
   return (
     <div className="mt-11">
       <div className="flex items-center justify-between">
@@ -31,6 +33,8 @@ function Answers({ totalAnswers, data, success, error }: props) {
           answers.map((answer) => <AnswerCard {...answer} key={answer._id} />)
         }
       />
+
+      <Pagination isNext={isNext} page={page} />
     </div>
   );
 }

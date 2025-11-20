@@ -1,4 +1,10 @@
-import { DataRender, Filter, LocalSearch, QuestionCard } from "@/components";
+import {
+  DataRender,
+  Filter,
+  LocalSearch,
+  Pagination,
+  QuestionCard,
+} from "@/components";
 
 import { RouteParams } from "@/types";
 import { EMPTY_QUESTION } from "@/constants/states";
@@ -50,6 +56,8 @@ export default async function Collections({ searchParams }: RouteParams) {
           </div>
         )}
       />
+
+      <Pagination isNext={isNext || false} page={page} />
     </>
   );
 }

@@ -1,4 +1,10 @@
-import { DataRender, Filter, LocalSearch, TagCard } from "@/components";
+import {
+  DataRender,
+  Filter,
+  LocalSearch,
+  Pagination,
+  TagCard,
+} from "@/components";
 import { tagsPageFilters } from "@/constants/filters";
 import ROUTES from "@/constants/route";
 import { EMPTY_TAGS } from "@/constants/states";
@@ -15,7 +21,7 @@ async function page({ searchParams }: RouteParams) {
     filter,
   });
 
-  const { tags } = data || {};
+  const { tags, isNext } = data || {};
 
   return (
     <>
@@ -43,6 +49,8 @@ async function page({ searchParams }: RouteParams) {
           </div>
         )}
       />
+
+      <Pagination isNext={isNext || false} page={page} />
     </>
   );
 }

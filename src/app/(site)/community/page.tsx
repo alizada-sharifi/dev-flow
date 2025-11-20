@@ -1,4 +1,4 @@
-import { DataRender, Filter, LocalSearch } from "@/components";
+import { DataRender, Filter, LocalSearch, Pagination } from "@/components";
 import ROUTES from "@/constants/route";
 import { EMPRY_USERS } from "@/constants/states";
 import { getUsers } from "@/lib/actions/user.action";
@@ -54,6 +54,8 @@ async function Community({ searchParams }: RouteParams) {
           </div>
         )}
       />
+
+      <Pagination isNext={isNext || false} page={page} />
     </div>
   );
 }

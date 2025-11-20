@@ -1,4 +1,9 @@
-import { DataRender, LocalSearch, QuestionCard } from "@/components";
+import {
+  DataRender,
+  LocalSearch,
+  Pagination,
+  QuestionCard,
+} from "@/components";
 import ROUTES from "@/constants/route";
 import { EMPTY_QUESTION } from "@/constants/states";
 import { getTagQuestions } from "@/lib/actions/tag.action";
@@ -45,6 +50,8 @@ async function TagDetails({ params, searchParams }: RouteParams) {
           </div>
         )}
       />
+
+      <Pagination isNext={isNext} page={page} />
     </>
   );
 }
