@@ -9,11 +9,13 @@ import { Preview } from "@/components/common/Preview";
 import UserAvatar from "@/components/layout/UserAvatar";
 import Answers from "./_components/Answers";
 import AnswerForm from "./_components/AnswerForm";
+import SavedQuestion from "./_components/SavedQuestion";
 
 import { getQuestion, incrementViews } from "@/lib/actions/question.action";
 import { hasVoted } from "@/lib/actions/votes.action";
 import { getAnswers } from "@/lib/actions/answer.action";
 import { formatNumber, getTimeStamp } from "@/lib/utils";
+import { hasSavedQuestion } from "@/lib/actions/collection.action";
 
 import ROUTES from "@/constants/route";
 import { RouteParams, TagType } from "@/types";
@@ -45,6 +47,10 @@ async function QuestionsDetail({ params }: RouteParams) {
     targetId: question._id,
     targetType: "question",
   });
+
+  const hasSavedQuestionPromise = hasSavedQuestion({
+    questionId: question._id,
+  });
   return (
     <>
       <div className="flex items-center justify-start w-full flex-col mt-7.5">
@@ -64,7 +70,7 @@ async function QuestionsDetail({ params }: RouteParams) {
             </Link>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end items-center gap-4">
             <Suspense fallback={<p>loading....</p>}>
               <Votes
                 upvotes={question.upvotes}
@@ -72,6 +78,13 @@ async function QuestionsDetail({ params }: RouteParams) {
                 hasVotedPromise={hasVotedPromise}
                 targetId={question._id}
                 targetType="question"
+              />
+            </Suspense>
+
+            <Suspense fallback={<p>loading....</p>}>
+              <SavedQuestion
+                questionId={question._id}
+                hasSavedQuestionPromise={hasSavedQuestionPromise}
               />
             </Suspense>
           </div>
