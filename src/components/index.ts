@@ -10,3 +10,4 @@ export { default as LocalSearch } from "./common/LocalSearch";
 export { default as Metric } from "./common/Metric";
 export { default as DataRender } from "./common/DataRender";
 export { default as Votes } from "./common/Votes";
+export { default as QuestionCard } from "./common/QuestionCard";

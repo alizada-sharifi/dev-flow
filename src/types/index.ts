@@ -72,3 +72,9 @@ export type UserType = {
   portfolio?: string;
   reputaion?: number;
 };
+
+export type CollectionType = {
+  _id: string;
+  author: AuthorType | string;
+  question: QuestionType;
+};
