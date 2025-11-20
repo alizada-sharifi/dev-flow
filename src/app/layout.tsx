@@ -54,7 +54,7 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
           <Toaster richColors />
-        </SessionProvider>ha
+        </SessionProvider>
       </body>
     </html>
   );
