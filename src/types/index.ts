@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 export type TagType = {
   _id: string;
   name: string;
+  questions?: number;
 };
 
 export type AuthorType = {

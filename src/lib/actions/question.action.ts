@@ -27,6 +27,7 @@ import { NotFoundError, UnauthorizedError } from "../http-errors";
 import { GetQuestionSchema } from "@/schemas/get-question.schema";
 import { PaginatedSearchParamsSchema } from "@/schemas/paginated-search-params.schema";
 import { IncrementViewsSchema } from "@/schemas/increment-views.schema";
+import dbConnect from "../mongoose";
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -314,6 +315,25 @@ export async function incrementViews(
     await question.save();
 
     return { success: true, data: { views: question.views } };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function getHotQuestions(): Promise<
+  ActionResponse<QuestionType[]>
+> {
+  try {
+    await dbConnect();
+
+    const questions = await Question.find()
+      .sort({ views: -1, upvotes: -1 })
+      .limit(5);
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(questions)),
+    };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }

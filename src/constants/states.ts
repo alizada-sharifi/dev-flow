@@ -57,3 +57,13 @@ export const EMPRY_USERS = {
   title: "No Users Found",
   message: "You're ALONE. The only one here. More uses are coming soon!",
 };
+
+export const EMPTY_HOT_QUESTIONS = {
+  title: "No Question Found",
+  message: "No questions have been asked yet.",
+};
+
+export const EMPTY_HOT_TAGS = {
+  title: "No Tags Found",
+  message: "No Tags have been created yet.",
+};
