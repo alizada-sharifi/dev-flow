@@ -31,7 +31,7 @@ export default async function Home({ searchParams }: RouteParams) {
   // });
   return (
     <>
-      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center mt-6">
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold">All Questions</h1>
 
         <CustomButton className="sm:w-fit py-6!">

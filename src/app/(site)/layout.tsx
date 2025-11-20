@@ -12,7 +12,7 @@ export default function SiteLayout({
       <div className="flex flex-1 overflow-hidden">
         <LeftSidebar />
 
-        <section className="flex flex-1 flex-col overflow-y-auto px-6 pb-6 sm:px-14">
+        <section className="flex flex-1 flex-col overflow-y-auto px-6 pt-6 pb-6 sm:px-14">
           <div className="mx-auto w-full max-w-5xl">{children}</div>
         </section>
         <RightSidebar />

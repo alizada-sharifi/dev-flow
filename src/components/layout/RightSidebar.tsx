@@ -23,7 +23,7 @@ const popularTags = [
 function RightSidebar() {
   return (
     <section className="custom-scrollbar sticky right-0 top-0 overflow-y-auto border-l p-6 shadow-sm dark:shadow-none lg:w-[350px] h-full max-xl:hidden">
-      <div className="">
+      <div>
         <h3 className="h3-bold text-dark-300 dark:text-white">Top Questions</h3>
 
         <div className="flex flex-col gap-6 w-full mt-7">

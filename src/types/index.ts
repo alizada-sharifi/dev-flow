@@ -60,3 +60,15 @@ export type paginatedSearchParams = {
   filter?: string;
   sort?: string;
 };
+
+export type UserType = {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  bio?: string;
+  image?: string;
+  location?: string;
+  portfolio?: string;
+  reputaion?: number;
+};
