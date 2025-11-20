@@ -35,7 +35,7 @@ function TagCard({
 
   const content = (
     <>
-      <Badge className="subtle-medium bg-light-800 dark:bg-dark-500 text-light-400 dark:text-light-500 rounded-md border-0 px-4 py-2 uppercase flex gap-2">
+      <Badge className="subtle-medium bg-light-800 dark:bg-dark-500 text-light-400 dark:text-light-500 rounded-md border-0 flex flex-row gap-2 border-none px-4 py-2 uppercase">
         <div className="flex items-center justify-center space-x-2">
           <i className={cn(iconClass, "text-sm")}></i>
           <span>{name}</span>
@@ -77,7 +77,7 @@ function TagCard({
 
   return (
     <Link href={ROUTES.TAG(_id)} className="shadow-light-100 dark:shadow-none">
-      <article className=" bg-light-800/50 dark:bg-dark-300  flex w-full flex-col rounded-2xl  px-8 py-10 sm:w-[260px]">
+      <article className=" bg-light-800/50 dark:bg-dark-300  flex w-full flex-col rounded-2xl  px-8 py-10 sm:w-[250px]">
         <div className="flex items-center justify-between gap-3">
           <div className="bg-light-800 dark:bg-dark-400 w-fit rounded-sm px-5 py-1.5">
             <p className="paragraph-semibold text-dark-300 dark:text-white">

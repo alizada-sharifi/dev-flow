@@ -1,7 +1,8 @@
-import { DataRender } from "@/components";
+import { DataRender, Filter } from "@/components";
 import { EMPTY_ANSWERS } from "@/constants/states";
 import { ActionResponse, AnswerType } from "@/types";
 import AnswerCard from "./AnswerCard";
+import { answerFilters } from "@/constants/filters";
 
 interface props extends ActionResponse<AnswerType[]> {
   totalAnswers: number;
@@ -14,7 +15,11 @@ function Answers({ totalAnswers, data, success, error }: props) {
         <h3 className="primary-text-gradient">
           {totalAnswers} {totalAnswers === 1 ? "Answer" : "Answers"}
         </h3>
-        <p>filters</p>
+        <Filter
+          filters={answerFilters}
+          triggerClassName="sm:min-w-32"
+          containerClassName="max-xs:w-full"
+        />
       </div>
 
       <DataRender

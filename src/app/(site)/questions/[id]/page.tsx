@@ -20,9 +20,10 @@ import { hasSavedQuestion } from "@/lib/actions/collection.action";
 import ROUTES from "@/constants/route";
 import { RouteParams, TagType } from "@/types";
 
-async function QuestionsDetail({ params }: RouteParams) {
+async function QuestionsDetail({ params, searchParams }: RouteParams) {
   const { id } = await params;
   const { success, data: question } = await getQuestion({ questionId: id });
+  const { page, pageSize, filter } = await searchParams;
 
   after(async () => {
     await incrementViews({ questionId: id });
@@ -36,9 +37,9 @@ async function QuestionsDetail({ params }: RouteParams) {
     error: answerError,
   } = await getAnswers({
     questionId: id,
-    filter: "latest",
-    page: 1,
-    pageSize: 10,
+    filter,
+    page: Number(page) || 1,
+    pageSize: Number(pageSize) || 10,
   });
 
   const { answers, author, createdAt, views, tags, content, title } = question;

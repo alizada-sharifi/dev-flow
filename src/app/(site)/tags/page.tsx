@@ -1,4 +1,5 @@
-import { DataRender, LocalSearch, TagCard } from "@/components";
+import { DataRender, Filter, LocalSearch, TagCard } from "@/components";
+import { tagsPageFilters } from "@/constants/filters";
 import ROUTES from "@/constants/route";
 import { EMPTY_TAGS } from "@/constants/states";
 import { getTags } from "@/lib/actions/tag.action";
@@ -20,8 +21,13 @@ async function page({ searchParams }: RouteParams) {
     <>
       <h1 className="h1-bold text-3xl">Tags</h1>
 
-      <section className="mt-11">
+      <section className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearch route={ROUTES.TAGS} placeholder="Search by tag name..." />
+
+        <Filter
+          filters={tagsPageFilters}
+          triggerClassName="min-h-[56px] sm:min-w-[170px]"
+        />
       </section>
 
       <DataRender
@@ -30,7 +36,7 @@ async function page({ searchParams }: RouteParams) {
         error={error}
         empty={EMPTY_TAGS}
         render={(tags) => (
-          <div className="mt-10 flex w-full flex-wrap gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             {tags.map((tag) => (
               <TagCard key={tag._id} {...tag} />
             ))}

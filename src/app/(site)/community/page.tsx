@@ -1,10 +1,11 @@
-import { DataRender, LocalSearch } from "@/components";
+import { DataRender, Filter, LocalSearch } from "@/components";
 import ROUTES from "@/constants/route";
 import { EMPRY_USERS } from "@/constants/states";
 import { getUsers } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types";
 import React from "react";
 import UserCard from "./_components/UserCard";
+import { communityPageFilter } from "@/constants/filters";
 
 async function Community({ searchParams }: RouteParams) {
   const { page, pageSize, query, filter } = await searchParams;
@@ -25,6 +26,12 @@ async function Community({ searchParams }: RouteParams) {
         <LocalSearch
           route={ROUTES.COMMUNITY}
           placeholder="There are some great devs here!"
+        />
+
+        <Filter
+          filters={communityPageFilter}
+          containerClassName="flex"
+          triggerClassName="min-h-[56px] sm:min-w-[170px]"
         />
       </div>
 

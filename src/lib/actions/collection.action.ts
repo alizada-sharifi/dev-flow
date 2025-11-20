@@ -17,7 +17,6 @@ import {
 } from "@/types";
 import { PaginatedSearchParamsSchema } from "@/schemas/paginated-search-params.schema";
 import mongoose, { PipelineStage } from "mongoose";
-// import mongoose from "mongoose";
 
 export async function toggleSavedQuestion(
   params: collectionData
