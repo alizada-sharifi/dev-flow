@@ -29,6 +29,8 @@ export type AnswerType = {
   author: AuthorType;
   content: string;
   createdAt: Date;
+  upvotes: number;
+  downvotes: number;
 };
 
 export type RouteParams = {

@@ -5,10 +5,24 @@ import UserAvatar from "@/components/layout/UserAvatar";
 import ROUTES from "@/constants/route";
 import { getTimeStamp } from "@/lib/utils";
 import { AnswerType } from "@/types";
+import { Suspense } from "react";
+import { Votes } from "@/components";
+import { hasVoted } from "@/lib/actions/votes.action";
 
 interface props extends AnswerType {}
 
-function AnswerCard({ _id, author, createdAt, content }: props) {
+function AnswerCard({
+  _id,
+  author,
+  createdAt,
+  content,
+  downvotes,
+  upvotes,
+}: props) {
+  const hasVotedPromise = hasVoted({
+    targetId: _id,
+    targetType: "answer",
+  });
   return (
     <article className="border-b py-10">
       <span id={JSON.stringify(_id)} className="mt-[-140px] pb-35 block" />
@@ -37,7 +51,17 @@ function AnswerCard({ _id, author, createdAt, content }: props) {
           </Link>
         </div>
 
-        <div className="flex justify-end">votes</div>
+        <div className="flex justify-end">
+          <Suspense fallback={<p>loading....</p>}>
+            <Votes
+              upvotes={upvotes}
+              downvotes={downvotes}
+              hasVotedPromise={hasVotedPromise}
+              targetId={_id}
+              targetType="answer"
+            />
+          </Suspense>
+        </div>
       </div>
 
       <Preview content={content} />
