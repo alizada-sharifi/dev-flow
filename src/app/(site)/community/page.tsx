@@ -3,7 +3,6 @@ import ROUTES from "@/constants/route";
 import { EMPRY_USERS } from "@/constants/states";
 import { getUsers } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types";
-import React from "react";
 import UserCard from "./_components/UserCard";
 import { communityPageFilter } from "@/constants/filters";
 

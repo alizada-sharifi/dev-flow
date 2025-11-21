@@ -1,50 +1,34 @@
-import mongoose, { Mongoose } from "mongoose";
-import logger from "./logger";
-import "@/database";
+import mongoose from "mongoose";
+import { NotFoundError } from "./http-errors";
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
-
-if (!MONGODB_URI) throw new Error("MONGODB_URI is not defined");
-
-type MongooseCache = {
-  conn: Mongoose | null;
-  promise: Promise<Mongoose> | null;
-};
-
+interface MongooseCache {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
 declare global {
-  var mongoose: MongooseCache;
+  var mongoose: MongooseCache | undefined;
 }
 
-let cached = global.mongoose;
+const cached: MongooseCache = (typeof global !== "undefined"
+  ? global.mongoose
+  : undefined) ?? { conn: null, promise: null };
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+if (typeof global !== "undefined") {
+  global.mongoose = cached;
 }
 
-const dbConnect = async (): Promise<Mongoose> => {
-  if (cached.conn) {
-    logger.info("Using existing mongoose connection");
-    return cached.conn;
-  }
+export default async function dbConnect(): Promise<typeof mongoose> {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) throw new NotFoundError("MONGODB_URI");
+
+  if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
     cached.promise = mongoose
-      .connect(MONGODB_URI, {
-        dbName: "DevOverFlow",
-      })
-      .then((result) => {
-        logger.info("Connected to MongoDB");
-        return result;
-      })
-      .catch((error) => {
-        logger.error("Error connecting to MongoDB", error);
-        throw error;
-      });
+      .connect(uri, { bufferCommands: false })
+      .then((mongoose) => mongoose);
   }
 
   cached.conn = await cached.promise;
-
   return cached.conn;
-};
-
-export default dbConnect;
+}

@@ -51,7 +51,7 @@ async function TagDetails({ params, searchParams }: RouteParams) {
         )}
       />
 
-      <Pagination isNext={isNext} page={page} />
+      <Pagination isNext={isNext || false} page={page} />
     </>
   );
 }
