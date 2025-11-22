@@ -34,6 +34,8 @@ import {
 } from "@/schemas/delete-question.schema";
 import { Answer, Collection, Vote } from "@/database";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { createInteraction } from "./interaction.action";
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -86,6 +88,15 @@ export async function createQuestion(
       { $push: { tags: { $each: tagIds } } },
       { session }
     );
+
+    after(async () => {
+      await createInteraction({
+        action: "post",
+        actionId: question._id.toString(),
+        actionTarget: "question",
+        authorId: userId as string,
+      });
+    });
 
     await session.commitTransaction();
 
@@ -267,6 +278,15 @@ export async function deleteQuestion(
     }
 
     await Question.findByIdAndDelete(questionId).session(session);
+
+    after(async () => {
+      await createInteraction({
+        action: "delete",
+        actionId: questionId,
+        actionTarget: "question",
+        authorId: user?.id as string,
+      });
+    });
 
     await session.commitTransaction();
 

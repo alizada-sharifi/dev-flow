@@ -10,6 +10,7 @@ import handleError from "../handlers/error";
 import {
   ActionResponse,
   AnswerType,
+  Badges,
   ErrorResponse,
   paginatedSearchParams,
   QuestionType,
@@ -26,6 +27,7 @@ import {
 } from "@/schemas/user.schema";
 import { NotFoundError } from "../http-errors";
 import { count } from "console";
+import { assignBadges } from "../utils";
 
 export async function getUsers(
   params: paginatedSearchParams
@@ -263,11 +265,7 @@ export async function getUserStats(params: getUserData): Promise<
   ActionResponse<{
     totalQuestions: number;
     totalAnswers: number;
-    badges: {
-      gold: number;
-      silver: number;
-      boronze: number;
-    };
+    badges: Badges;
   }>
 > {
   const validationResult = await action({
@@ -289,7 +287,7 @@ export async function getUserStats(params: getUserData): Promise<
           _id: null,
           count: { $sum: 1 },
           upvotes: { $sum: "$upvotes" },
-          views: { $sum: "views" },
+          views: { $sum: "$views" },
         },
       },
     ]);
@@ -304,6 +302,27 @@ export async function getUserStats(params: getUserData): Promise<
         },
       },
     ]);
+
+    const badges = assignBadges({
+      criteria: [
+        { type: "ANSWER_COUNT", count: answerStats.count },
+        { type: "QUESTION_COUNT", count: questionStats.count },
+        {
+          type: "QUESTION_UPVOTES",
+          count: questionStats.upvotes + answerStats.upvotes,
+        },
+        { type: "TOTAL_VIEWS", count: questionStats.views },
+      ],
+    });
+
+    return {
+      success: true,
+      data: {
+        totalQuestions: questionStats.count,
+        totalAnswers: answerStats.count,
+        badges,
+      },
+    };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }

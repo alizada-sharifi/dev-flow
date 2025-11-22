@@ -11,6 +11,7 @@ import {
   getuser,
   getuserAnswers,
   getuserQuestions,
+  getUserStats,
   getUserTopTags,
 } from "@/lib/actions/user.action";
 import { RouteParams } from "@/types";
@@ -24,6 +25,7 @@ import Stats from "./_components/Stats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EMPTY_ANSWERS, EMPTY_QUESTION, EMPTY_TAGS } from "@/constants/states";
 import AnswerCard from "@/components/common/AnswerCard";
+import { userModelMessageSchema } from "ai";
 
 async function ProfileDetails({ params, searchParams }: RouteParams) {
   const { id } = await params;
@@ -80,6 +82,12 @@ async function ProfileDetails({ params, searchParams }: RouteParams) {
   const { isNext: hasMoreAnswers, answers } = answersData!;
   const { tags } = tagsData!;
 
+  const { data: userStatsData } = await getUserStats({
+    userId: id,
+  });
+
+  console.log("userStatsDataQuestions", userStatsData?.totalQuestions);
+
   return (
     <>
       <section className="flex max-sm:flex-col-reverse items-start justify-between">
@@ -135,10 +143,10 @@ async function ProfileDetails({ params, searchParams }: RouteParams) {
       </section>
 
       <Stats
-        badges={{ gold: 0, bronze: 0, silver: 0 }}
-        reputationPoints={0}
-        totalAnswers={0}
-        totalQuestions={0}
+        badges={userStatsData?.badges || { BRONZE: 0, GOLD: 0, SILVER: 0 }}
+        reputationPoints={user.reputaion || 0}
+        totalAnswers={userStatsData?.totalAnswers || 0}
+        totalQuestions={userStatsData?.totalAnswers || 0}
       />
 
       <section className="mt-10 flex gap-10 min-w-[300px] w-full">

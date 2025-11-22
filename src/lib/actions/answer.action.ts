@@ -18,6 +18,8 @@ import {
   DeleteAnswerSchema,
   GetAnswerSchema,
 } from "@/schemas/answer.schema";
+import { after } from "next/server";
+import { createInteraction } from "./interaction.action";
 
 export async function CreateAnswer(
   params: answerParams
@@ -58,6 +60,15 @@ export async function CreateAnswer(
 
     question.answers += 1;
     await question.save({ session });
+
+    after(async () => {
+      await createInteraction({
+        action: "post",
+        actionId: newAnswer._id.toString(),
+        actionTarget: "answer",
+        authorId: userId as string,
+      });
+    });
 
     await session.commitTransaction();
 
@@ -107,6 +118,15 @@ export async function deleteAnswer(
 
     // ========== delete the answer
     await Answer.findByIdAndDelete(answerId);
+
+    after(async () => {
+      await createInteraction({
+        action: "delete",
+        actionId: answerId,
+        actionTarget: "answer",
+        authorId: user?.id as string,
+      });
+    });
 
     revalidatePath(`/profile/${user?.id}`);
 

@@ -81,3 +81,8 @@ export type CollectionType = {
   author: AuthorType | string;
   question: QuestionType;
 };
+export type Badges = {
+  GOLD: number;
+  SILVER: number;
+  BRONZE: number;
+};

@@ -19,6 +19,8 @@ import { NotFoundError, UnauthorizedError } from "../http-errors";
 import { Answer, Question, Vote } from "@/database";
 import { revalidatePath } from "next/cache";
 import ROUTES from "@/constants/route";
+import { after } from "next/server";
+import { createInteraction } from "./interaction.action";
 
 async function updateVoteCount(
   params: UpdateVoteCountProps,
@@ -78,6 +80,8 @@ export async function createVote(params: VoteProp): Promise<ActionResponse> {
 
     const ContentDoc = await Model.findById(targetId).session(session);
     if (!ContentDoc) throw new NotFoundError("Content");
+
+    const contentAuthorId = contentDoc.author.toString();
 
     const existingVote = await Vote.findOne({
       author: userId,
@@ -150,6 +154,15 @@ export async function createVote(params: VoteProp): Promise<ActionResponse> {
         session
       );
     }
+
+    after(async () => {
+      await createInteraction({
+        action: voteType,
+        actionId: targetId,
+        actionTarget: targetType,
+        authorId: contentAuthorId,
+      });
+    });
 
     await session.commitTransaction();
 

@@ -1,15 +1,12 @@
 import { formatNumber } from "@/lib/utils";
 import StatsCard from "./StatsCard";
+import { Badges } from "@/types";
 
 type props = {
   reputationPoints: number;
   totalQuestions: number;
   totalAnswers: number;
-  badges: {
-    gold: number;
-    silver: number;
-    bronze: number;
-  };
+  badges: Badges;
 };
 
 function Stats({
@@ -50,21 +47,21 @@ function Stats({
 
         <StatsCard
           image="/icons/gold-medal.svg"
-          value={badges.gold}
+          value={badges.GOLD}
           title="Gold Badges"
           alt="gold medal icon"
         />
 
         <StatsCard
           image="/icons/silver-medal.svg"
-          value={badges.silver}
+          value={badges.SILVER}
           title="Silver Badges"
           alt="silver medal icon"
         />
 
         <StatsCard
           image="/icons/bronze-medal.svg"
-          value={badges.bronze}
+          value={badges.BRONZE}
           title="Bronze Badges"
           alt="bronze medal icon"
         />
