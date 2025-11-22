@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import mongoose from "mongoose";
-import { Question, Answer } from "@/database";
+import { Question, Answer, Vote } from "@/database";
 import { IAnswerDoc } from "@/database/answer.model";
 import action from "../handlers/action";
 import { answerParams, getAnswerParams } from "@/types/action";
@@ -13,7 +13,11 @@ import handleError from "../handlers/error";
 import ROUTES from "@/constants/route";
 import { answerServerSchema } from "@/schemas/answer-server.schema";
 import { ActionResponse, ErrorResponse, AnswerType } from "@/types";
-import { GetAnswerSchema } from "@/schemas/answer.schema";
+import {
+  DeleteAnswerData,
+  DeleteAnswerSchema,
+  GetAnswerSchema,
+} from "@/schemas/answer.schema";
 
 export async function CreateAnswer(
   params: answerParams
@@ -65,6 +69,50 @@ export async function CreateAnswer(
     return handleError(error) as ErrorResponse;
   } finally {
     session.endSession();
+  }
+}
+
+export async function deleteAnswer(
+  params: DeleteAnswerData
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: DeleteAnswerSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { answerId } = validationResult.params!;
+  const { user } = validationResult.session!;
+
+  try {
+    const answer = await Answer.findById(answerId);
+    if (!answer) throw new NotFoundError("Answer");
+
+    if (answer.author.toString() !== user?.id)
+      throw new Error("You're not allowed to delete this answer");
+
+    // ===============reduce the question answers count
+    await Question.findByIdAndUpdate(
+      answer.question,
+      { $inc: { answers: -1 } },
+      { new: true }
+    );
+
+    //===================== delete votes that relate to this answer
+    await Vote.deleteMany({ actionId: answerId, actionType: "answer" });
+
+    // ========== delete the answer
+    await Answer.findByIdAndDelete(answerId);
+
+    revalidatePath(`/profile/${user?.id}`);
+
+    return { success: true };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
   }
 }
 

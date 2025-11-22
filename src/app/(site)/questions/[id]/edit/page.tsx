@@ -4,7 +4,6 @@ import ROUTES from "@/constants/route";
 import { getQuestion } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types";
 import { notFound, redirect } from "next/navigation";
-import { toast } from "sonner";
 
 async function EditQuestion({ params }: RouteParams) {
   const { id } = await params;
@@ -16,7 +15,7 @@ async function EditQuestion({ params }: RouteParams) {
   const { data: question, success } = await getQuestion({ questionId: id });
   if (!success) return notFound();
 
-  if (question?.author.toString() !== session.user?.id) {
+  if (question?.author._id.toString() !== session.user?.id) {
     redirect(ROUTES.QUESTIONS(id));
   }
 

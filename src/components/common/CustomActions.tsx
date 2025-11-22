@@ -14,6 +14,9 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { deleteQuestion } from "@/lib/actions/question.action";
+import { deleteAnswer } from "@/lib/actions/answer.action";
 
 type props = {
   type: "question" | "answer";
@@ -25,6 +28,17 @@ function CustomActions({ type, itemID }: props) {
 
   const handleEdit = async () => {
     router.push(`/questions/${itemID}/edit`);
+  };
+
+  const handleDelete = async () => {
+    if (type === "question") {
+      await deleteQuestion({ questionId: itemID });
+
+      toast.success("Question deleted successfully");
+    } else if (type === "answer") {
+      await deleteAnswer({ answerId: itemID });
+      toast.success("Answer deleted successfully");
+    }
   };
 
   return (
@@ -62,7 +76,10 @@ function CustomActions({ type, itemID }: props) {
             <AlertDialogCancel className="cursor-pointer">
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction className="border-primary-100! bg-primary-500 text-light-800 cursor-pointer">
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="border-primary-100! bg-primary-500 text-light-800 cursor-pointer"
+            >
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>
