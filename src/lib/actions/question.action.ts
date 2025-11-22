@@ -100,6 +100,8 @@ export async function createQuestion(
 
     await session.commitTransaction();
 
+    revalidatePath(`/profile/${userId}`);
+
     return { success: true, data: JSON.parse(JSON.stringify(question)) };
   } catch (error) {
     await session.abortTransaction();

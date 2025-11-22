@@ -73,6 +73,7 @@ export async function CreateAnswer(
     await session.commitTransaction();
 
     revalidatePath(ROUTES.QUESTIONS(questionId));
+    revalidatePath(`/profile/${userId}`);
 
     return { success: true, data: JSON.parse(JSON.stringify(newAnswer)) };
   } catch (error) {

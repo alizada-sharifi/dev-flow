@@ -25,7 +25,6 @@ import Stats from "./_components/Stats";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EMPTY_ANSWERS, EMPTY_QUESTION, EMPTY_TAGS } from "@/constants/states";
 import AnswerCard from "@/components/common/AnswerCard";
-import { userModelMessageSchema } from "ai";
 
 async function ProfileDetails({ params, searchParams }: RouteParams) {
   const { id } = await params;
@@ -82,11 +81,17 @@ async function ProfileDetails({ params, searchParams }: RouteParams) {
   const { isNext: hasMoreAnswers, answers } = answersData!;
   const { tags } = tagsData!;
 
-  const { data: userStatsData } = await getUserStats({
+  const {
+    success: statsSuccess,
+    data: userStatsData,
+    error: statsError,
+  } = await getUserStats({
     userId: id,
   });
 
-  console.log("userStatsDataQuestions", userStatsData?.totalQuestions);
+  if (!statsSuccess) {
+    console.error("Error fetching user stats:", statsError);
+  }
 
   return (
     <>
@@ -146,7 +151,7 @@ async function ProfileDetails({ params, searchParams }: RouteParams) {
         badges={userStatsData?.badges || { BRONZE: 0, GOLD: 0, SILVER: 0 }}
         reputationPoints={user.reputaion || 0}
         totalAnswers={userStatsData?.totalAnswers || 0}
-        totalQuestions={userStatsData?.totalAnswers || 0}
+        totalQuestions={userStatsData?.totalQuestions || 0}
       />
 
       <section className="mt-10 flex gap-10 min-w-[300px] w-full">

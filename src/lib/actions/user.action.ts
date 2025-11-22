@@ -26,8 +26,8 @@ import {
   GetUserTagSchema,
 } from "@/schemas/user.schema";
 import { NotFoundError } from "../http-errors";
-import { count } from "console";
 import { assignBadges } from "../utils";
+import dbConnect from "../mongoose";
 
 export async function getUsers(
   params: paginatedSearchParams
@@ -280,6 +280,8 @@ export async function getUserStats(params: getUserData): Promise<
   const { userId } = params;
 
   try {
+    await dbConnect();
+
     const [questionStats] = await Question.aggregate([
       { $match: { author: new Types.ObjectId(userId) } },
       {
@@ -303,23 +305,30 @@ export async function getUserStats(params: getUserData): Promise<
       },
     ]);
 
+    // Handle cases where there are no questions or answers
+    const questionCount = questionStats?.count || 0;
+    const answerCount = answerStats?.count || 0;
+    const questionUpvotes = questionStats?.upvotes || 0;
+    const answerUpvotes = answerStats?.upvotes || 0;
+    const questionViews = questionStats?.views || 0;
+
     const badges = assignBadges({
       criteria: [
-        { type: "ANSWER_COUNT", count: answerStats.count },
-        { type: "QUESTION_COUNT", count: questionStats.count },
+        { type: "ANSWER_COUNT", count: answerCount },
+        { type: "QUESTION_COUNT", count: questionCount },
         {
           type: "QUESTION_UPVOTES",
-          count: questionStats.upvotes + answerStats.upvotes,
+          count: questionUpvotes + answerUpvotes,
         },
-        { type: "TOTAL_VIEWS", count: questionStats.views },
+        { type: "TOTAL_VIEWS", count: questionViews },
       ],
     });
 
     return {
       success: true,
       data: {
-        totalQuestions: questionStats.count,
-        totalAnswers: answerStats.count,
+        totalQuestions: questionCount,
+        totalAnswers: answerCount,
         badges,
       },
     };

@@ -81,7 +81,7 @@ export async function createVote(params: VoteProp): Promise<ActionResponse> {
     const ContentDoc = await Model.findById(targetId).session(session);
     if (!ContentDoc) throw new NotFoundError("Content");
 
-    const contentAuthorId = contentDoc.author.toString();
+    const contentAuthorId = ContentDoc.author.toString();
 
     const existingVote = await Vote.findOne({
       author: userId,
@@ -167,6 +167,8 @@ export async function createVote(params: VoteProp): Promise<ActionResponse> {
     await session.commitTransaction();
 
     revalidatePath(ROUTES.QUESTIONS(targetId));
+    // Revalidate author's profile to update badges when upvotes change
+    revalidatePath(`/profile/${contentAuthorId}`);
 
     return { success: true };
   } catch (error) {

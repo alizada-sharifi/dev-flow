@@ -1,27 +1,27 @@
 export const BADGE_CRITERIA = {
   QUESTION_COUNT: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
+    BRONZE: 5,
+    SILVER: 20,
+    GOLD: 40,
   },
   ANSWER_COUNT: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
+    BRONZE: 5,
+    SILVER: 20,
+    GOLD: 40,
   },
   QUESTION_UPVOTES: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
+    BRONZE: 5,
+    SILVER: 20,
+    GOLD: 40,
   },
   ANSWER_UPVOTES: {
-    BRONZE: 10,
-    SILVER: 50,
-    GOLD: 100,
+    BRONZE: 5,
+    SILVER: 20,
+    GOLD: 40,
   },
   TOTAL_VIEWS: {
-    BRONZE: 1000,
-    SILVER: 10000,
-    GOLD: 100000,
+    BRONZE: 100,
+    SILVER: 500,
+    GOLD: 1000,
   },
 };
