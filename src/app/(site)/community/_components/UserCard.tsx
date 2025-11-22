@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import UserAvatar from "@/components/layout/UserAvatar";
 import ROUTES from "@/constants/route";
+import { UserAvatar } from "@/components";
 
 type Props = {
   _id: string;

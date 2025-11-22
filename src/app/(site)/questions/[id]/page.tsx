@@ -4,9 +4,7 @@ import { after } from "next/server";
 
 import { Suspense } from "react";
 
-import { Metric, TagCard, Votes } from "@/components";
-import { Preview } from "@/components/common/Preview";
-import UserAvatar from "@/components/layout/UserAvatar";
+import { Metric, TagCard, UserAvatar, Votes } from "@/components";
 import Answers from "./_components/Answers";
 import AnswerForm from "./_components/AnswerForm";
 import SavedQuestion from "./_components/SavedQuestion";
@@ -19,6 +17,7 @@ import { hasSavedQuestion } from "@/lib/actions/collection.action";
 
 import ROUTES from "@/constants/route";
 import { RouteParams, TagType } from "@/types";
+import { Preview } from "@/components/common/Preview";
 
 async function QuestionsDetail({ params, searchParams }: RouteParams) {
   const { id } = await params;
@@ -60,6 +59,7 @@ async function QuestionsDetail({ params, searchParams }: RouteParams) {
             <UserAvatar
               id={author._id}
               name={author.name}
+              image={author.image}
               className="size-[22px]"
               fallbackClassName="text-[10px]"
             />

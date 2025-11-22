@@ -2,22 +2,24 @@ import Link from "next/link";
 
 import { getTimeStamp } from "@/lib/utils";
 import ROUTES from "@/constants/route";
-import { Metric, TagCard } from "@/components";
+import { CustomActions, Metric, TagCard } from "@/components";
 import placeholderImage from "@/../public/images/placeholder.svg";
 
 import { QuestionType, TagType } from "@/types";
 
 type props = {
   question: QuestionType;
+  showActionsButtons?: boolean;
 };
 
 export default function QuestionCard({
   question: { _id, title, upvotes, answers, author, createdAt, tags, views },
+  showActionsButtons = false,
 }: props) {
   return (
     <div className="bg-white dark:dark-gradient shadow-light-100 dark:shadow-dark-100 rounded-[10px] p-9 sm:px-11 ">
-      <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
-        <div>
+      <div className="flex flex-col-reverse items-center justify-between gap-5 sm:flex-row">
+        <div className="flex-1">
           <span className="subtle-regular text-dark-400 dark:text-light-700 line-clamp-1 flex sm:hidden">
             {getTimeStamp(createdAt)}
           </span>
@@ -28,6 +30,8 @@ export default function QuestionCard({
             </h3>
           </Link>
         </div>
+
+        {showActionsButtons && <CustomActions type="question" itemID={_id} />}
       </div>
 
       <div className="mt-3.5 flex w-full flex-wrap gap-2">

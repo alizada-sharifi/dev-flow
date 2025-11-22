@@ -11,6 +11,7 @@ const ROUTES = {
   LOGIN: "/login",
   SIGNUP: "/sign-up",
   SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
+  EDITPROFILE: "/profile/edit",
 };
 
 export default ROUTES;

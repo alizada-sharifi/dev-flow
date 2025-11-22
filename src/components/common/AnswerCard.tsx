@@ -1,15 +1,18 @@
 import Link from "next/link";
 
 import { Preview } from "@/components/common/Preview";
-import UserAvatar from "@/components/layout/UserAvatar";
 import ROUTES from "@/constants/route";
-import { getTimeStamp } from "@/lib/utils";
+import { cn, getTimeStamp } from "@/lib/utils";
 import { AnswerType } from "@/types";
 import { Suspense } from "react";
-import { Votes } from "@/components";
+import { CustomActions, UserAvatar, Votes } from "@/components";
 import { hasVoted } from "@/lib/actions/votes.action";
 
-interface props extends AnswerType {}
+interface props extends AnswerType {
+  containerClassName?: string;
+  showReadMore?: boolean;
+  showActionsButtons?: boolean;
+}
 
 function AnswerCard({
   _id,
@@ -18,14 +21,29 @@ function AnswerCard({
   content,
   downvotes,
   upvotes,
+  question,
+  containerClassName,
+  showReadMore = false,
+  showActionsButtons = false,
 }: props) {
   const hasVotedPromise = hasVoted({
     targetId: _id,
     targetType: "answer",
   });
   return (
-    <article className="border-b py-10">
-      <span id={JSON.stringify(_id)} className="mt-[-140px] pb-35 block" />
+    <article
+      className={cn(
+        "border-b border-light-800 dark:border-dark-300 py-10 relative",
+        containerClassName
+      )}
+    >
+      <span id={`answer-${_id}`} className="mt-[-140px] pb-35 block" />
+
+      {showActionsButtons && (
+        <div className="bg-light-800 flex items-center justify-center absolute -right-2 -top-5 size-9 rounded-full">
+          <CustomActions type="answer" itemID={_id} />
+        </div>
+      )}
 
       <div className="mb-5 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <div className="flex flex-1 items-start gap-1 sm:items-center">
@@ -65,6 +83,15 @@ function AnswerCard({
       </div>
 
       <Preview content={content} />
+
+      {showReadMore && (
+        <Link
+          href={`/questions/${question}#answer-${_id}`}
+          className="body-semibold relative z-10 font-space-grotesk text-primary-500 hover:text-primary-500/80"
+        >
+          <p className="mt-1">Read more...</p>
+        </Link>
+      )}
     </article>
   );
 }

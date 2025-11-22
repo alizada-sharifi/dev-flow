@@ -3,9 +3,9 @@ import Link from "next/link";
 
 import ROUTES from "@/constants/route";
 import ThemeToggle from "./ThemeToggle";
-import UserAvatar from "./UserAvatar";
 import { auth } from "@/auth";
 import MobileNavigation from "./MobileNavigation";
+import UserAvatar from "../common/UserAvatar";
 
 async function Navbar() {
   const session = await auth();

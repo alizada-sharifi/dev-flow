@@ -1,8 +1,8 @@
 import { DataRender, Filter, Pagination } from "@/components";
 import { EMPTY_ANSWERS } from "@/constants/states";
 import { ActionResponse, AnswerType } from "@/types";
-import AnswerCard from "./AnswerCard";
 import { answerFilters } from "@/constants/filters";
+import AnswerCard from "@/components/common/AnswerCard";
 
 interface props extends ActionResponse<AnswerType[]> {
   totalAnswers: number;

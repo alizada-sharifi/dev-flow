@@ -13,3 +13,5 @@ export { default as Votes } from "./common/Votes";
 export { default as QuestionCard } from "./common/QuestionCard";
 export { default as Filter } from "./common/Filter";
 export { default as Pagination } from "./common/Pagination";
+export { default as UserAvatar } from "./common/UserAvatar";
+export { default as CustomActions } from "./common/CustomActions";

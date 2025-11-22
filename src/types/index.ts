@@ -32,6 +32,7 @@ export type AnswerType = {
   createdAt: Date;
   upvotes: number;
   downvotes: number;
+  question: string;
 };
 
 export type RouteParams = {
@@ -72,6 +73,7 @@ export type UserType = {
   location?: string;
   portfolio?: string;
   reputaion?: number;
+  createdAt: Date;
 };
 
 export type CollectionType = {

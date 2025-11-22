@@ -162,6 +162,10 @@
   @apply text-[12px] font-medium leading-[15.6px];
 }
 
+@utility small-semibold {
+  @apply text-[12px] font-semibold leading-[15.6px];
+}
+
 @utility body-medium {
   @apply text-[14px] font-medium leading-[18.2px];
 }
@@ -252,6 +256,10 @@
 
 @utility no-focus {
   @apply focus-visible:ring-0! focus-visible:ring-transparent! focus-visible:ring-offset-0!;
+}
+
+@utility tab {
+  @apply min-h-full! dark:bg-dark-400! bg-light-800! text-light-500! dark:data-[state=active]:bg-dark-300! data-[state=active]:bg-primary-100! data-[state=active]:text-primary-500!;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
