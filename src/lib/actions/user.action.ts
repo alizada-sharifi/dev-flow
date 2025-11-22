@@ -28,6 +28,7 @@ import {
 import { NotFoundError } from "../http-errors";
 import { assignBadges } from "../utils";
 import dbConnect from "../mongoose";
+import { ProfileSchema, ProfileSchemaType } from "@/schemas/profile.schema";
 
 export async function getUsers(
   params: paginatedSearchParams
@@ -331,6 +332,35 @@ export async function getUserStats(params: getUserData): Promise<
         totalAnswers: answerCount,
         badges,
       },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function updateUser(
+  params: ProfileSchemaType
+): Promise<ActionResponse<{ user: UserType }>> {
+  const validationResult = await action({
+    params,
+    schema: ProfileSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { user } = validationResult.session!;
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(user?.id, params, {
+      new: true,
+    });
+
+    return {
+      success: true,
+      data: { user: JSON.parse(JSON.stringify(updatedUser)) },
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;
