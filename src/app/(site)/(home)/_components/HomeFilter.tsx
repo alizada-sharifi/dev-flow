@@ -10,12 +10,20 @@ import { cn } from "@/lib/utils";
 
 const filters = [
   {
-    name: "React",
-    value: "react",
+    name: "Newest",
+    value: "newest",
   },
   {
-    name: "Javascript",
-    value: "javascript",
+    name: "Unanswered",
+    value: "unanswered",
+  },
+  {
+    name: "Popular",
+    value: "popular",
+  },
+  {
+    name: "Recommended",
+    value: "recommended",
   },
 ];
 
@@ -45,7 +53,7 @@ function HomeFilter() {
   };
 
   return (
-    <div className="mt-10 hidden sm:flex flex-wrap gap-3">
+    <div className="mt-10 hidden md:flex flex-wrap gap-3">
       {filters.map((filter) => (
         <Button
           onClick={() => handleClickType(filter.value)}

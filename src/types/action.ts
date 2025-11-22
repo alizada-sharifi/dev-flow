@@ -74,3 +74,10 @@ export type UpdateReputationParams = {
   performerId: string;
   authorId: string;
 };
+
+export type recommendedParams = {
+  userId: string;
+  query?: string;
+  skip: number;
+  limit: number;
+};
