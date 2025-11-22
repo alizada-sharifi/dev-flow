@@ -1,4 +1,6 @@
+import { IInteractionDoc } from "@/database/interaction.model";
 import { paginatedSearchParams } from ".";
+import mongoose from "mongoose";
 
 export type SignInWithOAuthParams = {
   provider: "github" | "google";
@@ -64,4 +66,11 @@ export type HasVoteProp = Pick<VoteProp, "targetId" | "targetType">;
 export type HasVoteResponse = {
   isUpvoted: boolean;
   isdownvoted: boolean;
+};
+
+export type UpdateReputationParams = {
+  interaction: IInteractionDoc;
+  session: mongoose.ClientSession;
+  performerId: string;
+  authorId: string;
 };
