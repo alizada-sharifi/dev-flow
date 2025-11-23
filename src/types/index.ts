@@ -86,3 +86,9 @@ export type Badges = {
   SILVER: number;
   BRONZE: number;
 };
+
+export type GlobalSearchedItem = {
+  id: string;
+  type: "question" | "answer" | "user" | "tag";
+  title: string;
+};

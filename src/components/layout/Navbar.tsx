@@ -6,6 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 import { auth } from "@/auth";
 import MobileNavigation from "./MobileNavigation";
 import UserAvatar from "../common/UserAvatar";
+import GlobalSearch from "./globalSearch/GlobalSearch";
 
 async function Navbar() {
   const session = await auth();
@@ -18,7 +19,9 @@ async function Navbar() {
           <b className="text-primary-500">OverFlow</b>
         </p>
       </Link>
-      globals search
+
+      <GlobalSearch />
+
       <div className="flex gap-x-5">
         <ThemeToggle />
         {session?.user?.id && (
