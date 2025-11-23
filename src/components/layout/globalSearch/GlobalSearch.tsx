@@ -16,7 +16,7 @@ function GlobalSearch() {
 
   const [search, setSearch] = useState(query || "");
   const [isOpen, setIsOpen] = useState(query || false);
-  const searchContainerRef = useRef(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
       if (
