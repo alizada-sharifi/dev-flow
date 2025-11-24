@@ -7,7 +7,6 @@ import { updateUser } from "@/lib/actions/user.action";
 import { ProfileSchema, ProfileSchemaType } from "@/schemas/profile.schema";
 import { UserType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { error } from "console";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -84,7 +83,7 @@ function EditProfileForm({ user }: { user: UserType }) {
           control={form.control}
           name="location"
           placeholder="Where do you live?"
-          label="Portfolio link"
+          label="Location"
         />
 
         <CustomTextarea

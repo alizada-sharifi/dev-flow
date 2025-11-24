@@ -53,7 +53,7 @@ async function QuestionsDetail({ params, searchParams }: RouteParams) {
   });
   return (
     <>
-      <div className="flex items-center justify-start w-full flex-col mt-7.5">
+      <div className="flex items-center justify-start w-full flex-col">
         <div className="flex w-full flex-col-reverse justify-between">
           <div className="flex items-center justify-start gap-1">
             <UserAvatar

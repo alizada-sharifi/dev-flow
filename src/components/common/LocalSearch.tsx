@@ -61,7 +61,7 @@ function LocalSearch({ placeholder = "search...", className, route }: Props) {
         placeholder={placeholder}
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="paragraph-regular no-focus placeholder:text-shadow-dark-400 dark:text-light-700 border-0 outline-0 shadow-none !bg-transparent"
+        className="paragraph-regular no-focus placeholder:text-shadow-dark-400 dark:text-light-700 border-0 outline-0 shadow-none bg-transparent!"
       />
     </div>
   );

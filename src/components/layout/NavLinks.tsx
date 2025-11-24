@@ -18,8 +18,7 @@ function NavLinks({
       <ul className="flex flex-col gap-y-4">
         {navbars.map((item) => {
           const isActive =
-            (pathname.includes(item.route) && item.route.length > 1) ||
-            pathname === item.route;
+            item.route === pathname || pathname.startsWith(`${item.route}/`);
 
           if (item.route === "/profile") {
             if (userId) item.route = `${item.route}/${userId}`;

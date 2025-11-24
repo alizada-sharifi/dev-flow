@@ -14,6 +14,13 @@ import { getQuestions } from "@/lib/actions/question.action";
 import { RouteParams } from "@/types";
 import { EMPTY_QUESTION } from "@/constants/states";
 import { homePageFilters } from "@/constants/filters";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dev OverFlow | Home",
+  description:
+    "Discover different programming questions and answers with recommendations from the community.",
+};
 
 export default async function Home({ searchParams }: RouteParams) {
   const { page, pageSize, query, filter } = await searchParams;

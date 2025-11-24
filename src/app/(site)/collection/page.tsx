@@ -26,7 +26,7 @@ export default async function Collections({ searchParams }: RouteParams) {
 
   return (
     <>
-      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
+      <section>
         <h1 className="h1-bold">Saved Questions</h1>
       </section>
 
