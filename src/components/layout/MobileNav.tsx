@@ -39,7 +39,7 @@ function MobileNav({ userId }: { userId?: string }) {
 
       <section
         className={cn(
-          "custom-scrollbar fixed left-0 top-0 z-50 h-full w-[250px] border-r bg-white p-6 shadow-md transition-transform duration-300 dark:bg-dark-200 dark:shadow-none",
+          "custom-scrollbar fixed left-0 top-0 z-50 h-full w-[250px]! border-r bg-white p-6 shadow-md transition-transform duration-300 dark:bg-dark-200 dark:shadow-none",
           open ? "translate-x-0" : "-translate-x-full"
         )}
       >

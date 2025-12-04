@@ -2,6 +2,7 @@ import {
   BriefcaseBusiness,
   FileQuestionMark,
   House,
+  NotebookPen,
   Star,
   Tag,
   UserRound,
@@ -45,6 +46,11 @@ const navbars = [
     icon: FileQuestionMark,
     route: ROUTES.ASKQUESTION,
     label: "Ask Question",
+  },
+  {
+    icon: NotebookPen,
+    route: ROUTES.BLOG,
+    label: "Blog",
   },
 ];
 

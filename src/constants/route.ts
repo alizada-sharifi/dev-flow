@@ -12,6 +12,9 @@ const ROUTES = {
   SIGNUP: "/sign-up",
   SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
   EDITPROFILE: "/profile/edit",
+  BLOG: "/blog",
+  CREATEBLOG: "/blog/create",
+  VIEWBLOG: (id: string) => `/blog/${id}`,
 };
 
 export default ROUTES;

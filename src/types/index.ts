@@ -92,3 +92,14 @@ export type GlobalSearchedItem = {
   type: "question" | "answer" | "user" | "tag";
   title: string;
 };
+
+export type BlogType = {
+  _id: string;
+  imageUrl: string;
+  date: string;
+  title: string;
+  description: string;
+  author: string;
+  role: string;
+  authorImage: string;
+};
